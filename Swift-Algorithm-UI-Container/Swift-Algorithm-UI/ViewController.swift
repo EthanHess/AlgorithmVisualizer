@@ -32,12 +32,8 @@ typealias ScrollHandler = ScrollIndexDidChange
 let kNotificationNameAlgorithmDataUpdated = "AlgorithmDataUpdated"
 
 class ViewController: UIViewController, ScrollHandler {
-    
-    //TODO add input view
-    
-    //NOTE: Should make this header? Right now it's seperate from CV
-    
-    //MARK: lazy = only computed once / initialized only when needed (Not thread safe though, so use only with very expensive objects / operations)
+
+    //MARK: lazy = only computed once / initialized only when needed (Not thread safe though, so use only with very expensive objects / operations) (i.e. a date picker)
     lazy var scrollPicker : AlgorithmChoiceScroll = {
         let acs = AlgorithmChoiceScroll()
         return acs
@@ -305,8 +301,8 @@ class ViewController: UIViewController, ScrollHandler {
     }
     
     @objc fileprivate func collectionDataFromAlgorithmator(_ notif: Notification) {
-        print("Observed data \(notif)")
-        //Do stuff with payload here
+        print("Observed data \(notif.userInfo)")
+        //Do stuff with payload here (i.e. animate peak finder / strings etc)
     }
     
     //MARK: This works beautifully but allow user to build their own trees via input
@@ -396,13 +392,17 @@ typealias CollectionViewFunctions = UICollectionViewDelegate & UICollectionViewD
 extension ViewController : CollectionViewFunctions {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        var returnNumber = 1
+        if algorithmType == .peakFinder {
+            returnNumber = collectionViewPopulatorMatrix.count // # of total subarrays arrays
+        }
+        return returnNumber
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var returnNumber = 0
         if algorithmType == .peakFinder {
-            returnNumber = collectionViewPopulatorMatrix.count
+            returnNumber = collectionViewPopulatorMatrix[section].count // subarray at index
         }
         return returnNumber
     }
@@ -415,12 +415,11 @@ extension ViewController : CollectionViewFunctions {
             preconditionFailure("No cell!")
         }
         
-        //TODO others
         if algorithmType == .peakFinder {
             if animationType == .none {
-                //TODO flatten Matrix
-                let val = self.collectionViewPopulatorMatrix[indexPath.row] //is subarray
-                collectionCell.populateLabel("\(val[0])") //need to grab subarray
+                let arrayAtSection = self.collectionViewPopulatorMatrix[indexPath.section]
+                let val = arrayAtSection[indexPath.row]
+                collectionCell.populateLabel("\(val)")
             } else {
                 //animate algorithm
             }
@@ -430,7 +429,9 @@ extension ViewController : CollectionViewFunctions {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        let dimension = collectionViewPopulatorMatrix[0].count //size to subarray
+        let theSize = self.collection.frame.size.width / CGFloat(dimension)
+        return CGSize(width: theSize - 10, height: theSize - 10)
     }
 }
 

@@ -126,7 +126,7 @@ class Algorithmator: NSObject {
     //MARK: Sorting
     //-- MERGE SORT --
     
-    //TODO make some Swift changes via this
+    //Credit Link: I used this tutorial for help
     //https://www.raywenderlich.com/741-swift-algorithm-club-swift-merge-sort
     
     static func mergeSort(array: [Int]) -> [Int] {
@@ -174,7 +174,7 @@ class Algorithmator: NSObject {
     
     //-- QUICKSORT --
     
-    //TODO update, doesn't currently work
+    //Credit Link: I used this tutorial for help but doesn't currently work, TODO fix
     //https://www.raywenderlich.com/books/data-structures-algorithms-in-swift/v3.0/chapters/34-quicksort
     
     static func quickSortWithArray(array: [Int]) -> [Int] {
@@ -257,26 +257,43 @@ class Algorithmator: NSObject {
         var max = 0
         var index = 0
         
+        //Pass index of subarray and cell to highlight + delay time (double)
+        var dictToPassToVC : [Int:[Int: Double]] = [0:[0:0]]
+        var delayTime : Double = 0.0
+        
         for i in 0...matrix.count - 1 {
+            
+            //Animate VC side
+            delayTime += 0.05
+            dictToPassToVC = [i: [column:delayTime]]
+            postNotifcationWithVal(val: dictToPassToVC)
+            
             if max < matrix[i][column] {
                 max = matrix[i][column]
                 index = i
             }
         }
+        
         return index
     }
     
     //MARK: Updating observer from Algorithm implementation class
-    static func postNotifcationWithVal<T>(val: T) {
-        NotificationCenter.default.post(name: Notification.Name(kNotificationNameAlgorithmDataUpdated), object: T.self)
+    
+    //Generics are useful when hiding type info is necessary
+    
+    //static func postNotifcationWithVal<T>(val: T) {
+    
+    //}
+    
+    static func postNotifcationWithVal(val: [AnyHashable: Any]) {
+        NotificationCenter.default.post(name: Notification.Name(kNotificationNameAlgorithmDataUpdated), object: val.self, userInfo: val)
     }
     
-    //MARK: Ray Wenderlich QS + MS, just for some variation
+    //MARK: Credit: Ray Wenderlich QS + MS, just for some variation
     //https://www.raywenderlich.com/741-swift-algorithm-club-swift-merge-sort
     
     //TODO <T: Comparable>: i.e. generic, this handles ints as is
-    
-    //Does this work correctly?
+   
     static func mergeSortRW(_ array: [Int]) -> [Int] {
         guard array.count > 1 else { return array }
         let middleIndex = array.count / 2
@@ -468,7 +485,7 @@ class Algorithmator: NSObject {
 
     //MARK: search insert
     // O(log n)
-    // A Logarithm is the inverse of exponentiation (i.e. good / easier every step)
+    // A logarithm is the inverse of exponentiation (i.e. good / easier every step)
     
     //searchInsert([1,3,5,6], 7)
     

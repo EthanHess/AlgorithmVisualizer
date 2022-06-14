@@ -11,6 +11,10 @@ class AlgorithmCollectionCell: UICollectionViewCell {
     
     var valueLabel : UILabel = {
         let vl = UILabel()
+        vl.backgroundColor = .lightGray
+        vl.layer.cornerRadius = 3
+        vl.layer.masksToBounds = true
+        vl.textAlignment = .center
         return vl
     }()
     
@@ -19,7 +23,6 @@ class AlgorithmCollectionCell: UICollectionViewCell {
         
         self.addSubview(valueLabel)
         valueLabel.anchor(top: self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0)
-        
     }
     
     func populateLabel(_ str: String) {

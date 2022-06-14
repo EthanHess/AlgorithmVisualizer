@@ -24,6 +24,7 @@
 		275E557025B64DB20065949E /* Algorithmator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275E556F25B64DB20065949E /* Algorithmator.swift */; };
 		275F378C27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F378B27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift */; };
 		275F378E27D9685F00FE8B82 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275F378D27D9685F00FE8B82 /* DataFetcher.swift */; };
+		2790F4EB2859281100EF2839 /* InputContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2790F4EA2859281100EF2839 /* InputContainer.swift */; };
 		279A2AF527C01318001A2A7A /* AlgorithmCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279A2AF427C01318001A2A7A /* AlgorithmCollectionCell.swift */; };
 		27AB881027BEC32B00E3B847 /* LogDebugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AB880F27BEC32B00E3B847 /* LogDebugging.swift */; };
 		27C77EDF27C8004F00C74631 /* StringFunctionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C77EDE27C8004F00C74631 /* StringFunctionsRenderer.swift */; };
@@ -74,6 +75,7 @@
 		275E556F25B64DB20065949E /* Algorithmator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithmator.swift; sourceTree = "<group>"; };
 		275F378B27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayFunctionsRenderer.swift; sourceTree = "<group>"; };
 		275F378D27D9685F00FE8B82 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
+		2790F4EA2859281100EF2839 /* InputContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContainer.swift; sourceTree = "<group>"; };
 		279A2AF427C01318001A2A7A /* AlgorithmCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmCollectionCell.swift; sourceTree = "<group>"; };
 		27AB880F27BEC32B00E3B847 /* LogDebugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDebugging.swift; sourceTree = "<group>"; };
 		27C77EDE27C8004F00C74631 /* StringFunctionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFunctionsRenderer.swift; sourceTree = "<group>"; };
@@ -134,7 +136,6 @@
 				274332EA259969B60033C59D /* AppDelegate.swift */,
 				274332EC259969B60033C59D /* SceneDelegate.swift */,
 				274332EE259969B60033C59D /* ViewController.swift */,
-				2743332325996C8F0033C59D /* AlgorithmChoiceScroll.swift */,
 				27CA6D1B25AFB805006CA383 /* Extensions.swift */,
 				275E556F25B64DB20065949E /* Algorithmator.swift */,
 				274F8BA525C63C44002198A3 /* AutocompleteViewController.swift */,
@@ -143,12 +144,9 @@
 				274F8BB525C64290002198A3 /* Trie.swift */,
 				27AB880F27BEC32B00E3B847 /* LogDebugging.swift */,
 				279A2AF427C01318001A2A7A /* AlgorithmCollectionCell.swift */,
-				27C77EDE27C8004F00C74631 /* StringFunctionsRenderer.swift */,
-				27C77EE027C8006E00C74631 /* GraphFunctionsRenderer.swift */,
-				275F378B27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift */,
 				27C77EE427C8027100C74631 /* DigitRenderer.swift */,
-				27C77EE227C8025500C74631 /* NodeView.swift */,
 				275F378D27D9685F00FE8B82 /* DataFetcher.swift */,
+				2790F4EC2859282A00EF2839 /* Subviews */,
 				274332F0259969B60033C59D /* Main.storyboard */,
 				274332F6259969B80033C59D /* Assets.xcassets */,
 				274332F8259969B80033C59D /* LaunchScreen.storyboard */,
@@ -174,6 +172,19 @@
 				27433311259969B90033C59D /* Info.plist */,
 			);
 			path = "Swift-Algorithm-UIUITests";
+			sourceTree = "<group>";
+		};
+		2790F4EC2859282A00EF2839 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				27C77EDE27C8004F00C74631 /* StringFunctionsRenderer.swift */,
+				27C77EE027C8006E00C74631 /* GraphFunctionsRenderer.swift */,
+				275F378B27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift */,
+				27C77EE227C8025500C74631 /* NodeView.swift */,
+				2743332325996C8F0033C59D /* AlgorithmChoiceScroll.swift */,
+				2790F4EA2859281100EF2839 /* InputContainer.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 				27C77EE527C8027100C74631 /* DigitRenderer.swift in Sources */,
 				274332EB259969B60033C59D /* AppDelegate.swift in Sources */,
 				274F8BB625C64290002198A3 /* Trie.swift in Sources */,
+				2790F4EB2859281100EF2839 /* InputContainer.swift in Sources */,
 				274332ED259969B60033C59D /* SceneDelegate.swift in Sources */,
 				27C77EE127C8006E00C74631 /* GraphFunctionsRenderer.swift in Sources */,
 				2743332425996C8F0033C59D /* AlgorithmChoiceScroll.swift in Sources */,
