@@ -133,19 +133,10 @@
 		274332E9259969B60033C59D /* Swift-Algorithm-UI */ = {
 			isa = PBXGroup;
 			children = (
-				274332EA259969B60033C59D /* AppDelegate.swift */,
-				274332EC259969B60033C59D /* SceneDelegate.swift */,
-				274332EE259969B60033C59D /* ViewController.swift */,
-				27CA6D1B25AFB805006CA383 /* Extensions.swift */,
-				275E556F25B64DB20065949E /* Algorithmator.swift */,
-				274F8BA525C63C44002198A3 /* AutocompleteViewController.swift */,
-				271F81C828500CB800202B16 /* TreeNode.swift */,
-				274F8BAA25C640EE002198A3 /* TrieNode.swift */,
-				274F8BB525C64290002198A3 /* Trie.swift */,
-				27AB880F27BEC32B00E3B847 /* LogDebugging.swift */,
-				279A2AF427C01318001A2A7A /* AlgorithmCollectionCell.swift */,
-				27C77EE427C8027100C74631 /* DigitRenderer.swift */,
-				275F378D27D9685F00FE8B82 /* DataFetcher.swift */,
+				2748B742285E7427007172B9 /* Application */,
+				2748B743285E743B007172B9 /* Views */,
+				2748B744285E745C007172B9 /* Models */,
+				2748B745285E7467007172B9 /* Helper */,
 				2790F4EC2859282A00EF2839 /* Subviews */,
 				274332F0259969B60033C59D /* Main.storyboard */,
 				274332F6259969B80033C59D /* Assets.xcassets */,
@@ -174,15 +165,56 @@
 			path = "Swift-Algorithm-UIUITests";
 			sourceTree = "<group>";
 		};
+		2748B742285E7427007172B9 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				274332EA259969B60033C59D /* AppDelegate.swift */,
+				274332EC259969B60033C59D /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		2748B743285E743B007172B9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				274332EE259969B60033C59D /* ViewController.swift */,
+				274F8BA525C63C44002198A3 /* AutocompleteViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2748B744285E745C007172B9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				271F81C828500CB800202B16 /* TreeNode.swift */,
+				274F8BAA25C640EE002198A3 /* TrieNode.swift */,
+				274F8BB525C64290002198A3 /* Trie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2748B745285E7467007172B9 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				27AB880F27BEC32B00E3B847 /* LogDebugging.swift */,
+				275F378D27D9685F00FE8B82 /* DataFetcher.swift */,
+				275E556F25B64DB20065949E /* Algorithmator.swift */,
+				27CA6D1B25AFB805006CA383 /* Extensions.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		2790F4EC2859282A00EF2839 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				279A2AF427C01318001A2A7A /* AlgorithmCollectionCell.swift */,
 				27C77EDE27C8004F00C74631 /* StringFunctionsRenderer.swift */,
 				27C77EE027C8006E00C74631 /* GraphFunctionsRenderer.swift */,
 				275F378B27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift */,
 				27C77EE227C8025500C74631 /* NodeView.swift */,
 				2743332325996C8F0033C59D /* AlgorithmChoiceScroll.swift */,
 				2790F4EA2859281100EF2839 /* InputContainer.swift */,
+				27C77EE427C8027100C74631 /* DigitRenderer.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
