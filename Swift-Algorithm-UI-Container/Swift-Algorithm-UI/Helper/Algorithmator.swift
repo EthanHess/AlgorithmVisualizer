@@ -136,8 +136,17 @@ class Algorithmator: NSObject {
         guard array.count > 1 else { return array }
         
         let midPoint = array.count / 2 //what happens even / odd?
+        
+        //MARK: Highlight mid point / send to listeners for animation
+        let dictMidPoint = ["midPoint": midPoint]
+        postNotifcationWithVal(val: dictMidPoint)
+        
         let leftArray = Array(array[0..<midPoint]) //Is like "subarrayWithRange"
         let rightArray = Array(array[midPoint..<array.count - midPoint])
+        
+        //MARK: Highlight left / right arrays with different colors, send to listeners
+        let dictLeftRight = ["leftArrayPreMergeSort": leftArray, "rightArrayPreMergeSort": rightArray]
+        postNotifcationWithVal(val: dictLeftRight)
         
         let returnArray = mergeArraysWithLeft(left: mergeSort(array: leftArray), right: mergeSort(array: rightArray))
         return returnArray
