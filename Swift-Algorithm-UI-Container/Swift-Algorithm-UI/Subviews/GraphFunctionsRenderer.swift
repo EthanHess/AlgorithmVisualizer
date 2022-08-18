@@ -37,10 +37,6 @@ class GraphFunctionsRenderer: UIView {
         self.layer.borderColor = UIColor.systemGreen.cgColor
     }
     
-    func setUpTreeToRender(_ rootNode: TreeNode?) {
-        renderTreeAfterSetup(rootNode)
-    }
-    
     //MARK: Should ideally compare trees in subcontainers but for now this should do
     func setUpTreesToRenderAndCompare(_ rootNodeLeftTree: TreeNode?, _ rootNodeRightTree: TreeNode?) {
         renderDoubleTreesAfterSetup(rootNodeLeftTree, rootNodeRightTree)
@@ -48,13 +44,9 @@ class GraphFunctionsRenderer: UIView {
     
     //MARK: TODO, determine height, and create coordinates from there
     
-    //MARK: Single tree
-    func renderTreeAfterSetup(_ rootNode: TreeNode?) {
-        
-    }
     
     //MARK: Double Trees
-    func renderDoubleTreesAfterSetup(_ rootNodeLeftTree: TreeNode?, _ rootNodeRightTree: TreeNode?) {
+    fileprivate func renderDoubleTreesAfterSetup(_ rootNodeLeftTree: TreeNode?, _ rootNodeRightTree: TreeNode?) {
         
         guard let rnlt = rootNodeLeftTree else {
             return
@@ -70,9 +62,15 @@ class GraphFunctionsRenderer: UIView {
         
         let leftNodeView = NodeView(frame: nodeFrameWithTreeHeightDoubleTree(leftTreeHeight, leftTree: true))
         let rightNodeView = NodeView(frame: nodeFrameWithTreeHeightDoubleTree(rightTreeHeight, leftTree: false))
+        
+        leftNodeView.setValueText("\(rootNodeLeftTree?.val ?? 0)")
+        rightNodeView.setValueText("\(rootNodeRightTree?.val ?? 0)")
 
         addSubview(leftNodeView)
         addSubview(rightNodeView)
+        
+        bringSubviewToFront(leftNodeView)
+        bringSubviewToFront(rightNodeView)
         
         //MARK: Recursion after roots showing for rest of nodes
         
@@ -80,7 +78,7 @@ class GraphFunctionsRenderer: UIView {
         beginRecursiveSetupWithRoot(rootNodeRightTree, parentUI: rightNodeView)
     }
     
-    func beginRecursiveSetupWithRoot(_ parent: TreeNode?, parentUI: NodeView?) {
+    fileprivate func beginRecursiveSetupWithRoot(_ parent: TreeNode?, parentUI: NodeView?) {
         guard let parentNode = parent else {
             return
         }
@@ -153,7 +151,92 @@ class GraphFunctionsRenderer: UIView {
         return max(leftHeight, rightHeight) + 1
     }
     
+    
+    //MARK: Rotate tree (single mode, not compare mode)
+    
+    func setUpTreeToRender(_ rootNode: TreeNode?) {
+        renderTreeAfterSetup(rootNode)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.rotateBinaryWrapper(rootNode)
+        }
+    }
+
+    
+    //Single tree
+    fileprivate func renderTreeAfterSetup(_ rootNode: TreeNode?) {
+        guard let tn = rootNode else {
+            return
+        }
+        
+        let treeHeight = determineTreeHeight(tn)
+        
+        print("TREE HEIGHT \(treeHeight)")
+        
+        let nodeView = NodeView(frame: nodeFrameWithTreeHeightDoubleTree(treeHeight, leftTree: true)) //For now we'll use the left tree for single but eventually center
+
+        addSubview(nodeView)
+        
+        //MARK: Recursion after roots showing for rest of nodes
+        beginRecursiveSetupWithRoot(rootNode, parentUI: nodeView)
+    }
+    
+    fileprivate func rotateBinaryWrapper(_ root: TreeNode?) {
+        let newRotatedTree = rotateBinaryTreeThenRerender(root)
+        
+        //MARK: Redraw view
+        
+        //Note, TODO just removing from superview, should store in array and clear, but for now we just want to see if rotation works
+        
+        //Remove Node views
+        for theView in self.subviews {
+            theView.removeFromSuperview()
+        }
+        
+        //Remove bezier paths (layers) ?
+        renderTreeAfterSetup(newRotatedTree)
+    }
+    
+    fileprivate func rotateBinaryTreeThenRerender(_ root: TreeNode?) -> TreeNode? {
+        if root == nil {
+            return root
+        }
+        let noChildren = root?.left == nil && root?.right == nil
+        if noChildren {
+            return root
+        }
+        
+        let rotatedRoot = rotateBinaryTreeThenRerender(root?.left)
+        
+        //MARK: Reassignment
+        root?.left?.left = root?.right
+        root?.left?.right = root
+        //root?.left = root?.right = nil
+        root?.left = nil
+        root?.right = nil
+        
+        print("ROTATED ROOT \(rotatedRoot.logable)")
+        return rotatedRoot
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+//MARK: How to make that annoying warning about string interpolation optionals go away
+
+//Credit
+//https://stackoverflow.com/questions/42543007/how-to-solve-string-interpolation-produces-a-debug-description-for-an-optional
+
+extension Optional {
+    var logable: Any {
+        switch self {
+        case .none:
+            return "<nil>|⭕️"
+        case let .some(value):
+            return value
+        }
     }
 }

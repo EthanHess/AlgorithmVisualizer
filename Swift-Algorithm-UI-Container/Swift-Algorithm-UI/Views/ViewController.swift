@@ -338,7 +338,11 @@ class ViewController: UIViewController, ScrollHandler {
         let equalTrees = inorderCheckWrapper(treeTwo, list: &listOne)
         print("EQUAL TREES \(equalTrees)")
         
-        graphRenderer.setUpTreesToRenderAndCompare(treeOne, treeTwo)
+        //MARK: Compare
+        //graphRenderer.setUpTreesToRenderAndCompare(treeOne, treeTwo)
+        
+        //MARK: Show one tree then rotate
+        graphRenderer.setUpTreeToRender(treeOne)
     }
     
     //MARK: Can move these
