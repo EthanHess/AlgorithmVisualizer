@@ -34,7 +34,8 @@ class GraphFunctionsRenderer: UIView {
         self.layer.cornerRadius = 5
         self.layer.masksToBounds = true
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.systemGreen.cgColor
+        self.layer.borderColor = UIColor.gray.cgColor
+//        self.backgroundColor = .darkGray
     }
     
     //MARK: Should ideally compare trees in subcontainers but for now this should do

@@ -168,16 +168,18 @@ class ViewController: UIViewController, ScrollHandler {
     fileprivate func containersSetup() {
         let vw = self.view.frame.size.width
         let vh = self.view.frame.size.height
-        graphRenderer.frame = CGRect(x: -vw, y: vh / 5, width: vw - 40, height: vh / 2)
+        graphRenderer.frame = CGRect(x: -vw, y: vh / 3.5, width: vw - 40, height: vh / 2)
         originalGraphFrame = graphRenderer.frame
         view.addSubview(graphRenderer)
+        
+        addShadowToView(graphRenderer)
     }
     
     fileprivate func collectionSetup() {
         let vw = self.view.frame.size.width
         let vh = self.view.frame.size.height
         
-        collection.frame = CGRect(x: 20, y: vh / 5, width: vw - 40, height: vh / 2)
+        collection.frame = CGRect(x: 20, y: vh / 3.5, width: vw - 40, height: vh / 2)
         view.addSubview(collection)
         
         //MARK: This works but won't animate w/o animating constraints
@@ -190,7 +192,20 @@ class ViewController: UIViewController, ScrollHandler {
         collection.dataSource = self
         
         collection.register(AlgorithmCollectionCell.self, forCellWithReuseIdentifier: "aCell")
+        
+        addShadowToView(collection)
     }
+    
+    //Adding shadows is generally expensive. You can either rasterize (convert to pixels then display) or use shadowPath. Rasterizing can be the better option provided your view isn't dynamic (changing size or moving).
+    
+    //Move to "extensions" file + make extension
+    fileprivate func addShadowToView(_ view: UIView) {
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowOpacity = 1
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 10
+    }
+    
     
     //On init frame is 0,0, wait a quarter of a second to set up
     @objc fileprivate func scrollSetupWrapper() {
