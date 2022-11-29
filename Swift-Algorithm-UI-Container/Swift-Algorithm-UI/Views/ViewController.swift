@@ -81,7 +81,9 @@ class ViewController: UIViewController, ScrollHandler {
         super.viewWillAppear(animated)
         
         UIConfig()
-        addObserverForKeyPath("") //No more path
+        addObserverForKeyPath("") //No more path, use combine
+        
+        self.view.gradientWithColors(colorOne: .black, colorTwo: .green)
         
         //Will now be called individually on scroll click
         algorithmTest()
@@ -143,6 +145,18 @@ class ViewController: UIViewController, ScrollHandler {
         
 //        let arrRemovalExtension = [1, 2, 3, 4].removeElements([3, 4])
 //        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension)")
+        
+        
+        calculatorWrapper()
+    }
+    
+    //TODO: wrap others (don't crowd lifecycle functions)
+    fileprivate func calculatorWrapper() {
+        let solutionCalculatorOne = Algorithmator.calculate("3+2*2")
+        let solutionCalculatorTwo = Algorithmator.calculate(" 3/2 ")
+        let solutionCalculatorThree = Algorithmator.calculate(" 3+5 / 2 ")
+        
+        print("-- CALCULATOR SOLUTIONS \(solutionCalculatorOne) -- \(solutionCalculatorTwo) -- \(solutionCalculatorThree) --")
     }
     
     fileprivate func UIConfig() {
@@ -172,7 +186,15 @@ class ViewController: UIViewController, ScrollHandler {
         originalGraphFrame = graphRenderer.frame
         view.addSubview(graphRenderer)
         
-        addShadowToView(graphRenderer)
+        //Extension
+        graphRenderer.layer.shadowOffset = CGSize(width: 10,
+                                                 height: 10)
+        graphRenderer.layer.shadowRadius = 5
+        graphRenderer.layer.shadowOpacity = 0.3
+        graphRenderer.customShadowPath(shadowHeight: 5)
+        
+        //Local func
+        //addShadowToView(graphRenderer)
     }
     
     fileprivate func collectionSetup() {
@@ -193,6 +215,7 @@ class ViewController: UIViewController, ScrollHandler {
         
         collection.register(AlgorithmCollectionCell.self, forCellWithReuseIdentifier: "aCell")
         
+        //Local function
         addShadowToView(collection)
     }
     

@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 extension UIView {
+    
+    //MARK: UI stuff
+    //Anchoring
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
         
         //Autoresizing mask controls how view resizes itself when (superview) bounds change
@@ -33,6 +36,46 @@ extension UIView {
         if height != 0 {
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
+    }
+    
+    //Shadow path
+    
+    //Referenced this tutorial / changed a few things (https://programmingwithswift.com/add-a-shadow-to-a-uiview-with-swift/)
+    
+    func customShadowPath(shadowHeight: CGFloat) {
+        let layerX = self.layer.bounds.origin.x
+        let layerY = self.layer.bounds.origin.y
+        let layerWidth = self.layer.bounds.size.width
+        let layerHeight = self.layer.bounds.size.height
+        
+        let path = UIBezierPath()
+        path.move(to: CGPoint.zero)
+        
+        path.addLine(to: CGPoint(x: layerX + layerWidth,
+                                     y: layerY))
+        path.addLine(to: CGPoint(x: layerX + layerWidth,
+                                     y: layerHeight + 20))
+        
+        path.addCurve(to: CGPoint(x: 0,
+                                      y: layerHeight),
+                      controlPoint1: CGPoint(x: layerX + layerWidth,
+                                                 y: layerHeight),
+                      controlPoint2: CGPoint(x: layerX,
+                                                 y: layerHeight))
+        
+        
+        self.layer.shadowPath = path.cgPath
+    }
+    
+    //Gradient (factor in vertical / multiple colors)
+    func gradientWithColors(colorOne: UIColor, colorTwo: UIColor) {
+        let gLayer = CAGradientLayer()
+        gLayer.colors = [colorOne.cgColor, colorTwo.cgColor] //limit ?
+        gLayer.locations = [0.0, 1.0] //vertical
+        gLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gLayer.frame = self.bounds
+        self.layer.insertSublayer(gLayer, at: 0)
     }
 }
 
@@ -79,7 +122,7 @@ extension Array where Element: ArrayProtocols {
             hashMap[theElement] = true
         }
         
-        //O(n)
+        //O(n) (or O(n^2) if using "firstIndex")
         for theElementSelf in self {
             if hashMap[theElementSelf] == true {
                 //MARK: "firstIndex" is O(n) so this needs to be more efficient
@@ -90,3 +133,4 @@ extension Array where Element: ArrayProtocols {
         }
     }
 }
+
