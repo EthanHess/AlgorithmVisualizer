@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		271F81C928500CB900202B16 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F81C828500CB800202B16 /* TreeNode.swift */; };
+		2733F829293EA5E800D5F30F /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F828293EA5E800D5F30F /* CalculatorView.swift */; };
+		2733F82B293EA5F900D5F30F /* SceneKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F82A293EA5F900D5F30F /* SceneKitView.swift */; };
+		2733F82D293EA8F800D5F30F /* SubChoiceScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F82C293EA8F800D5F30F /* SubChoiceScroll.swift */; };
 		274332EB259969B60033C59D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274332EA259969B60033C59D /* AppDelegate.swift */; };
 		274332ED259969B60033C59D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274332EC259969B60033C59D /* SceneDelegate.swift */; };
 		274332EF259969B60033C59D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274332EE259969B60033C59D /* ViewController.swift */; };
@@ -53,6 +56,9 @@
 
 /* Begin PBXFileReference section */
 		271F81C828500CB800202B16 /* TreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeNode.swift; sourceTree = "<group>"; };
+		2733F828293EA5E800D5F30F /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		2733F82A293EA5F900D5F30F /* SceneKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitView.swift; sourceTree = "<group>"; };
+		2733F82C293EA8F800D5F30F /* SubChoiceScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubChoiceScroll.swift; sourceTree = "<group>"; };
 		274332E7259969B60033C59D /* Swift-Algorithm-UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-Algorithm-UI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		274332EA259969B60033C59D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		274332EC259969B60033C59D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2733F82E293EA90B00D5F30F /* Scrolls */ = {
+			isa = PBXGroup;
+			children = (
+				2743332325996C8F0033C59D /* AlgorithmChoiceScroll.swift */,
+				2733F82C293EA8F800D5F30F /* SubChoiceScroll.swift */,
+			);
+			path = Scrolls;
+			sourceTree = "<group>";
+		};
 		274332DE259969B60033C59D = {
 			isa = PBXGroup;
 			children = (
@@ -207,12 +222,14 @@
 		2790F4EC2859282A00EF2839 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				2733F82E293EA90B00D5F30F /* Scrolls */,
 				279A2AF427C01318001A2A7A /* AlgorithmCollectionCell.swift */,
 				27C77EDE27C8004F00C74631 /* StringFunctionsRenderer.swift */,
 				27C77EE027C8006E00C74631 /* GraphFunctionsRenderer.swift */,
 				275F378B27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift */,
+				2733F828293EA5E800D5F30F /* CalculatorView.swift */,
+				2733F82A293EA5F900D5F30F /* SceneKitView.swift */,
 				27C77EE227C8025500C74631 /* NodeView.swift */,
-				2743332325996C8F0033C59D /* AlgorithmChoiceScroll.swift */,
 				2790F4EA2859281100EF2839 /* InputContainer.swift */,
 				27C77EE427C8027100C74631 /* DigitRenderer.swift */,
 			);
@@ -350,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				274F8BA625C63C44002198A3 /* AutocompleteViewController.swift in Sources */,
+				2733F829293EA5E800D5F30F /* CalculatorView.swift in Sources */,
 				274F8BAB25C640EE002198A3 /* TrieNode.swift in Sources */,
 				274332EF259969B60033C59D /* ViewController.swift in Sources */,
 				275F378C27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift in Sources */,
@@ -362,12 +380,14 @@
 				2790F4EB2859281100EF2839 /* InputContainer.swift in Sources */,
 				274332ED259969B60033C59D /* SceneDelegate.swift in Sources */,
 				27C77EE127C8006E00C74631 /* GraphFunctionsRenderer.swift in Sources */,
+				2733F82D293EA8F800D5F30F /* SubChoiceScroll.swift in Sources */,
 				2743332425996C8F0033C59D /* AlgorithmChoiceScroll.swift in Sources */,
 				275E557025B64DB20065949E /* Algorithmator.swift in Sources */,
 				274332F5259969B60033C59D /* Swift_Algorithm_UI.xcdatamodeld in Sources */,
 				271F81C928500CB900202B16 /* TreeNode.swift in Sources */,
 				275F378E27D9685F00FE8B82 /* DataFetcher.swift in Sources */,
 				279A2AF527C01318001A2A7A /* AlgorithmCollectionCell.swift in Sources */,
+				2733F82B293EA5F900D5F30F /* SceneKitView.swift in Sources */,
 				27C77EE327C8025500C74631 /* NodeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

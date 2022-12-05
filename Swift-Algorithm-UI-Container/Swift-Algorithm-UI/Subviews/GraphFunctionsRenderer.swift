@@ -7,7 +7,8 @@
 
 import UIKit
 
-class GraphFunctionsRenderer: UIView {
+class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
+    
 
     /*
     // Only override draw() if you perform custom drawing.
@@ -16,6 +17,12 @@ class GraphFunctionsRenderer: UIView {
         // Drawing code
     }
     */
+    
+    //Sub scroll picker
+    lazy var scrollPicker : SubChoiceScroll = {
+        let scs = SubChoiceScroll()
+        return scs
+    }()
     
     var nodeArray : [NodeView] = []
     
@@ -36,6 +43,30 @@ class GraphFunctionsRenderer: UIView {
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.gray.cgColor
 //        self.backgroundColor = .darkGray
+        
+        //renderSubScroll()
+        perform(#selector(renderSubScroll), with: nil, afterDelay: 0.25)
+    }
+    
+    //TODO add more + better colors
+    fileprivate func contentForSubScroll() -> ContentItem {
+        return [[titleKey: "Compare Trees", colorKey: UIColor.white], [titleKey: "Autocomplete Trie", colorKey: UIColor.yellow]]
+    }
+    
+    @objc fileprivate func renderSubScroll() {
+        let vw = self.frame.size.width
+        let vh = self.frame.size.height
+        
+        addSubview(scrollPicker)
+        scrollPicker.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 10, paddingRight: 20, width: vw - 40, height: vh / 5)
+        scrollPicker.delegate = self
+        
+        scrollPicker.layer.borderWidth = 1
+        scrollPicker.layer.borderColor = UIColor.white.cgColor
+        scrollPicker.layer.masksToBounds = true
+        scrollPicker.layer.cornerRadius = 5
+        
+        scrollPicker.contentArray = contentForSubScroll()
     }
     
     //MARK: Should ideally compare trees in subcontainers but for now this should do
@@ -218,6 +249,15 @@ class GraphFunctionsRenderer: UIView {
         
         print("ROTATED ROOT \(rotatedRoot.logable)")
         return rotatedRoot
+    }
+    
+    //MARK: Delegation (Rerendering view on scroll select)
+    func indexDidChange(index: Int) {
+        
+    }
+    
+    func viewTappedAtIndex(index: Int, withName: String) {
+        
     }
     
     required init?(coder: NSCoder) {

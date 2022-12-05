@@ -81,9 +81,9 @@ class ViewController: UIViewController, ScrollHandler {
         super.viewWillAppear(animated)
         
         UIConfig()
-        addObserverForKeyPath("") //No more path, use combine
+        addObserverForKeyPath("") //No more path, use Combine
         
-        self.view.gradientWithColors(colorOne: .black, colorTwo: .green)
+        self.view.gradientWithColors(colorOne: .cyan, colorTwo: .white)
         
         //Will now be called individually on scroll click
         algorithmTest()
@@ -338,6 +338,7 @@ class ViewController: UIViewController, ScrollHandler {
         NotificationCenter.default.addObserver(self, selector: #selector(collectionDataFromAlgorithmator(_:)), name: Notification.Name(kNotificationNameAlgorithmDataUpdated), object: nil)
     }
     
+    //Can also add Combine framework's version, i.e. Publishers + Subjects
     @objc fileprivate func collectionDataFromAlgorithmator(_ notif: Notification) {
         print("Observed data \(notif.userInfo)")
         //Do stuff with payload here (i.e. animate peak finder / strings etc)

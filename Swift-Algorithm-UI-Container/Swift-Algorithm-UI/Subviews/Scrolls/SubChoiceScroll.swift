@@ -1,21 +1,15 @@
 //
-//  AlgorithmChoiceScroll.swift
+//  SubChoiceScroll.swift
 //  Swift-Algorithm-UI
 //
-//  Created by Ethan Hess on 12/27/20.
+//  Created by Ethan Hess on 12/5/22.
 //
 
 import UIKit
 
-protocol ScrollIndexDidChange : AnyObject {
-    func indexDidChange(index: Int)
-    func viewTappedAtIndex(index: Int, withName: String)
-}
+//MARK: To inject into subviews to choose between different types of graph / tree / string problems etc.
 
-let titleKey = "title"
-let colorKey = "color"
-
-class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
+class SubChoiceScroll: UIView, UIScrollViewDelegate {
     
     var scrollView : UIScrollView = {
         let sv = UIScrollView()
@@ -23,19 +17,25 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
     }()
     
     var viewArray : [UIView] = []
+    
+    var contentArray : ContentItem = [] {
+        didSet {
+            setupScroll()
+        }
+    }
+    
     weak var delegate : ScrollIndexDidChange?
     
-    //TODO custom colors
-    //TODO add QuickSort
-    fileprivate func algorithmArray() -> [[String : Any]] {
-        return [[titleKey: "Binary Search", colorKey: UIColor.blue], [titleKey: "Merge Sort", colorKey: UIColor.red], [titleKey: "Peak Finder", colorKey: UIColor.orange], [titleKey: "Buildings Array", colorKey: UIColor.systemTeal], [titleKey: "Autocomplete", colorKey: UIColor.systemGreen]]
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
     }
     
     func setupScroll() {
         //scroll
         scrollView = UIScrollView(frame: self.bounds)
         scrollView.delegate = self
-        scrollView.contentSize = CGSize(width: Int(self.bounds.size.width) * algorithmArray().count, height: 0)
+        scrollView.contentSize = CGSize(width: Int(self.bounds.size.width) * contentArray.count, height: 0)
         scrollView.isPagingEnabled = true
         self.addSubview(scrollView)
         
@@ -48,7 +48,7 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
         
         var x = CGFloat(0.0)
         
-        for i in 0..<algorithmArray().count {
+        for i in 0..<contentArray.count {
             
             let height = CGFloat(self.frame.size.height - 20)
             let width = CGFloat(self.frame.size.width - 20)
@@ -60,8 +60,8 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
             theLabel.isUserInteractionEnabled = true
             theLabel.textAlignment = .center
             
-            theLabel.text = algorithmArray()[i][titleKey] as? String
-            theLabel.textColor = (algorithmArray()[i][colorKey] as! UIColor)
+            theLabel.text = contentArray[i][titleKey] as? String
+            theLabel.textColor = (contentArray[i][colorKey] as! UIColor)
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(viewTappedAtIndex(sender:)))
             theLabel.addGestureRecognizer(tap)
@@ -77,7 +77,7 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
             print("No tag")
             return
         }
-        let name = algorithmArray()[viewTag][titleKey]
+        let name = contentArray[viewTag][titleKey]
         self.delegate?.viewTappedAtIndex(index: viewTag, withName: name as! String)
     }
     
@@ -93,12 +93,7 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
         print("SCROLL OFFSET X \(scrollView.contentOffset.x)")
     }
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
-
 }
