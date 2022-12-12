@@ -55,7 +55,7 @@ class CalculatorButton : UIView {
     @objc fileprivate func configureLabel() {
         displayLabel.frame = self.bounds
         displayLabel.text = displayString
-        displayLabel.backgroundColor = displayString.isOperand() == true ? .orange : .darkGray
+        displayLabel.backgroundColor = displayString.isOperator() == true ? .orange : .darkGray
         addSubview(displayLabel)
     }
     
@@ -65,7 +65,7 @@ class CalculatorButton : UIView {
 }
 
 extension String {
-    func isOperand() -> Bool {
+    func isOperator() -> Bool {
         return self == "+" || self == "-" || self == "*" || self == "/"
     }
 }
