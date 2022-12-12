@@ -157,6 +157,8 @@ class ViewController: UIViewController, ScrollHandler {
         let solutionCalculatorThree = Algorithmator.calculate(" 3+5 / 2 ")
         
         print("-- CALCULATOR SOLUTIONS \(solutionCalculatorOne) -- \(solutionCalculatorTwo) -- \(solutionCalculatorThree) --")
+        
+        //print("-- CALCULATOR SOLUTIONS \(solutionCalculatorOne) --")
     }
     
     fileprivate func UIConfig() {

@@ -793,19 +793,22 @@ class Algorithmator: NSObject {
     //String math problem to Int solution, TODO: Render in StringFunctions
     
     
-    //MARK: This doesn't return the correct answer yet, fix this
+    //MARK: This doesn't return the correct answer yet for all inputs, only some, fix this
     
     static func calculate(_ s: String) -> Int {
         
+        var result = 0
         var operand = 0
         var symbol = "+"
         
-        //Get rid of spaces
-        let newString = s.trimmingCharacters(in: .whitespacesAndNewlines)
+        //Get rid of spaces (discard as seems to not remove double)
+        //let newString = s.trimmingCharacters(in: .whitespacesAndNewlines)
         
         var storageStack : [Int] = []
         
-        let strArr = Array(newString)
+        let strArr = Array(s)
+        
+        print("STR ARRAY \(strArr)")
         
         for i in 0...strArr.count - 1 {
             
@@ -815,42 +818,59 @@ class Algorithmator: NSObject {
             //Should be extension to be neater
             let charIsSymbol = charString == "+" || charString == "-" || charString == "*" || charString == "/"
             
-            let secondToLast = i == strArr.count - 2
-            
+            let last = i == strArr.count - 1
+
             let charNumVal = charIsSymbol == false ? Int(String(charString)) : 0
-            symbol = charIsSymbol == true ? String(charString) : symbol
-            
+
             if !charIsSymbol {
                 let compare = Int(String(charString))
                 if compare! >= 0 && compare! <= 9 {
-                    operand = operand * 10 + (charNumVal! - 0)
+                    operand = operand * 10 + charNumVal!
+                    print("-- CALCULATOR OPERAND SET \(operand)")
                 }
             }
             
-            if charIsSymbol || secondToLast {
-                if charString == "+" {
+            if charIsSymbol || last {
+                if symbol == "+" {
+                    print("--- CALC PLUS \(operand)")
                     storageStack.append(operand)
-                } else if charString == "-" {
-                    storageStack.append(-operand)
+                } else if symbol == "-" {
+                    storageStack.append(-1 * operand) //Should be -1 * ?
                 } else if symbol == "*" { //* or /
                     // popLast() in Swift removes element which we don't want
-                    let top = storageStack.last ?? 0
+                    let top = storageStack.popLast() ?? 0
                     let topTimesCur = top * operand
+                    print("CALC MULT \(operand) \(top)")
                     storageStack.append(topTimesCur)
-                } else { // "/"
-                    let top = storageStack.last ?? 0
+                } else if symbol == "-" { // "/"
+                    let top = storageStack.popLast() ?? 0
                     let  topDivCur = top / operand
+                    print("CALC SUB \(operand) \(top)")
                     storageStack.append(topDivCur)
+                } else {
+                    //
                 }
-                symbol = String(charString)
+                if charIsSymbol {
+                    symbol = String(charString)
+                }
+                print("-- CUR CALCULATOR OPERAND \(operand)")
                 operand = 0
             }
             }
         }
         
-        return storageStack.reduce(0, { accumulator, current in
-            accumulator + current
-        })
+        print("-- CALC STACK \(storageStack)")
+        
+        while !storageStack.isEmpty {
+            result += storageStack.popLast() ?? 0
+        }
+        
+        return result
+        
+//        return storageStack.reduce(0, { accumulator, current in
+//            //print("--- CALCULATOR A + C \(accumulator) -- \(current)")
+//            accumulator + current
+//        })
     }
 }
 
