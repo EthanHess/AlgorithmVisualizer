@@ -33,7 +33,8 @@ let kNotificationNameAlgorithmDataUpdated = "AlgorithmDataUpdated"
 
 class ViewController: UIViewController, ScrollHandler {
 
-    //MARK: lazy = only computed once / initialized only when needed (Not thread safe though, so use only with very expensive objects / operations) (i.e. a date picker)
+    //MARK: lazy = only computed once / initialized only when needed (Not thread safe though, so use only with very expensive objects / operations that may be called a lot) (i.e. a date picker)
+
     lazy var scrollPicker : AlgorithmChoiceScroll = {
         let acs = AlgorithmChoiceScroll()
         return acs
@@ -49,6 +50,12 @@ class ViewController: UIViewController, ScrollHandler {
         return sr
     }()
     
+    lazy var calculatorRenderer : CalculatorView = {
+        let cr = CalculatorView()
+        return cr
+    }()
+    
+    //
     lazy var collection : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
@@ -178,6 +185,8 @@ class ViewController: UIViewController, ScrollHandler {
         
         collectionSetup()
         containersSetup()
+        
+        //calculatorSetup() //Not offscreen yet, just UI test
     }
     
     //MARK: Graph / Strings subviews etc.
@@ -219,6 +228,21 @@ class ViewController: UIViewController, ScrollHandler {
         
         //Local function
         addShadowToView(collection)
+    }
+    
+    fileprivate func calculatorSetup() {
+        let vw = self.view.frame.size.width
+        let vh = self.view.frame.size.height
+        
+        calculatorRenderer.frame = CGRect(x: 20, y: vh / 3.5, width: vw - 40, height: vh / 2)
+        view.addSubview(calculatorRenderer)
+        
+        //Extension
+        calculatorRenderer.layer.shadowOffset = CGSize(width: 10,
+                                                 height: 10)
+        calculatorRenderer.layer.shadowRadius = 5
+        calculatorRenderer.layer.shadowOpacity = 0.3
+        calculatorRenderer.customShadowPath(shadowHeight: 5)
     }
     
     //Adding shadows is generally expensive. You can either rasterize (convert to pixels then display) or use shadowPath. Rasterizing can be the better option provided your view isn't dynamic (changing size or moving).
