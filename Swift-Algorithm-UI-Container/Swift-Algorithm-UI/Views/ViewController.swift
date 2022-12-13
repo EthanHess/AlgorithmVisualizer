@@ -31,6 +31,9 @@ typealias ScrollHandler = ScrollIndexDidChange
 
 let kNotificationNameAlgorithmDataUpdated = "AlgorithmDataUpdated"
 
+//TODO break down
+let kNotificationNameCalculatorAlgorithmUpdated = "CalulatorAlgorithmUpdated"
+
 class ViewController: UIViewController, ScrollHandler {
 
     //MARK: lazy = only computed once / initialized only when needed (Not thread safe though, so use only with very expensive objects / operations that may be called a lot) (i.e. a date picker)

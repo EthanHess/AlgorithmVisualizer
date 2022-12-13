@@ -139,14 +139,14 @@ class Algorithmator: NSObject {
         
         //MARK: Highlight mid point / send to listeners for animation
         let dictMidPoint = ["midPoint": midPoint]
-        postNotifcationWithVal(val: dictMidPoint)
+        postNotifcationWithVal(val: dictMidPoint, name: kNotificationNameAlgorithmDataUpdated)
         
         let leftArray = Array(array[0..<midPoint]) //Is like "subarrayWithRange"
         let rightArray = Array(array[midPoint..<array.count - midPoint])
         
         //MARK: Highlight left / right arrays with different colors, send to listeners
         let dictLeftRight = ["leftArrayPreMergeSort": leftArray, "rightArrayPreMergeSort": rightArray]
-        postNotifcationWithVal(val: dictLeftRight)
+        postNotifcationWithVal(val: dictLeftRight, name: kNotificationNameAlgorithmDataUpdated)
         
         let returnArray = mergeArraysWithLeft(left: mergeSort(array: leftArray), right: mergeSort(array: rightArray))
         return returnArray
@@ -275,7 +275,7 @@ class Algorithmator: NSObject {
             //Animate VC side
             delayTime += 0.05
             dictToPassToVC = [i: [column:delayTime]]
-            postNotifcationWithVal(val: dictToPassToVC)
+            postNotifcationWithVal(val: dictToPassToVC, name: kNotificationNameAlgorithmDataUpdated)
             
             if max < matrix[i][column] {
                 max = matrix[i][column]
@@ -294,8 +294,9 @@ class Algorithmator: NSObject {
     
     //}
     
-    static func postNotifcationWithVal(val: [AnyHashable: Any]) {
-        NotificationCenter.default.post(name: Notification.Name(kNotificationNameAlgorithmDataUpdated), object: val.self, userInfo: val)
+    //MARK: Main notif post (the UIKit version of Publishers / Subscribers)
+    static func postNotifcationWithVal(val: [AnyHashable: Any], name: String) {
+        NotificationCenter.default.post(name: Notification.Name(name), object: val.self, userInfo: val)
     }
     
     //MARK: Credit: Ray Wenderlich QS + MS, just for some variation
@@ -808,12 +809,12 @@ class Algorithmator: NSObject {
         
         let strArr = Array(s)
         
-        print("STR ARRAY \(strArr)")
-        
         for i in 0...strArr.count - 1 {
             
             let charString = strArr[i]
             if charString != " " {
+                
+            postNotifcationWithVal(val: [charString: i], name: kNotificationNameCalculatorAlgorithmUpdated)
             
             //Should be extension to be neater
             let charIsSymbol = charString == "+" || charString == "-" || charString == "*" || charString == "/"
@@ -835,14 +836,15 @@ class Algorithmator: NSObject {
                     print("--- CALC PLUS \(operand)")
                     storageStack.append(operand)
                 } else if symbol == "-" {
-                    storageStack.append(-1 * operand) //Should be -1 * ?
+                    print("--- CALC MINUS \(operand)")
+                    storageStack.append(-operand) //Should be -1 * ?
                 } else if symbol == "*" { //* or /
                     // popLast() in Swift removes element which we don't want
                     let top = storageStack.popLast() ?? 0
                     let topTimesCur = top * operand
                     print("CALC MULT \(operand) \(top)")
                     storageStack.append(topTimesCur)
-                } else if symbol == "-" { // "/"
+                } else if symbol == "/" { // "/"
                     let top = storageStack.popLast() ?? 0
                     let  topDivCur = top / operand
                     print("CALC SUB \(operand) \(top)")
@@ -851,9 +853,9 @@ class Algorithmator: NSObject {
                     //
                 }
                 if charIsSymbol {
+                    print("SYMBOL SET \(charString)")
                     symbol = String(charString)
                 }
-                print("-- CUR CALCULATOR OPERAND \(operand)")
                 operand = 0
             }
             }
@@ -865,6 +867,8 @@ class Algorithmator: NSObject {
             result += storageStack.popLast() ?? 0
         }
         
+        //Add to key file to prevent abundance of hardcoded strings
+        postNotifcationWithVal(val: ["CalculatorResult": result], name: kNotificationNameCalculatorAlgorithmUpdated)
         return result
         
 //        return storageStack.reduce(0, { accumulator, current in

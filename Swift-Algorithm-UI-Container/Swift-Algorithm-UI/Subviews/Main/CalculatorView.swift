@@ -20,6 +20,7 @@ class CalculatorView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        observe()
         perform(#selector(setUpArray), with: nil, afterDelay: 0.25)
         backgroundColor = .black
     }
@@ -57,6 +58,11 @@ class CalculatorView: UIView {
         }
     }
     
+    fileprivate func observe() {
+        let name = NSNotification.Name(rawValue: kNotificationNameCalculatorAlgorithmUpdated)
+        NotificationCenter.default.addObserver(self, selector: #selector(highlightButtonsAtIndex(_:)), name: name, object: nil)
+    }
+    
     fileprivate func buttonTexts() -> [String] {
         return ["1", "2", "3", "+",
                 "4", "5", "6", "-",
@@ -64,8 +70,14 @@ class CalculatorView: UIView {
                 "0", "AC", "/"] //TODO AC button will be double width
     }
     
-    fileprivate func highlightButtonAtIndex() {
-        
+    //TODO lock this so it must finish before
+    @objc fileprivate func highlightButtonsAtIndex(_ notif: Notification) {
+        let dict = notif.userInfo
+        print("NOTIF DATA \(dict)")
+    }
+    
+    deinit {
+        removeObserver(self, forKeyPath: kNotificationNameCalculatorAlgorithmUpdated)
     }
     
     required init?(coder: NSCoder) {
