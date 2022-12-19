@@ -37,10 +37,20 @@ class AutocompleteViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //["i love you", "island","ironman", "i love leetcode"], [5,3,2,2]
         
+        let arr = ["i love you", "island","ironman", "i love leetcode"]
+        let times = [5,3,2,2]
+        
+        let autoCompleteSystem = AutocompleteSystem(sentences: arr, times: times)
+        
+        let listForCChar = autoCompleteSystem.input(char: "i")
+        print("AUTOCOMPLETE \(listForCChar)")
+        
+        self.view.gradientWithColors(colorOne: .orange, colorTwo: .white)
     }
     
-    //TODO make JSON file
+    //Simple autocomplete
     fileprivate func tableSetup() {
         //Register
         searchTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -117,3 +127,118 @@ extension AutocompleteViewController : UITableViewDataSource, UITableViewDelegat
         
     }
 }
+
+
+
+
+//MARK: More complex autocomplete code (move to algorithmator after test)
+
+//MARK: Used some of this for reference / converted it to Swift from Java (Still tweaking a few things)
+
+//https://leetcode.ca/2017-09-02-642-Design-Search-Autocomplete-System/
+
+class AutocompleteSystem {
+    
+    var rootNode : ACNode?
+    var currentNode : ACNode?
+    var mutableStringBuffer = ""
+    
+    //MARK: Storing sentences (Memoization)
+    //Example input = ["i love you", "island","ironman", "i love leetcode"], [5,3,2,2]
+    init(sentences: Array<String>?, times: Array<Int>?) {
+        guard let theSentences = sentences, let theTimes = times else { return }
+        if times != nil && theSentences.count != theTimes.count { return }
+        
+        self.reset()
+        self.rootNode = ACNode()
+        
+        for i in 0...theTimes.count - 1 {
+            let sentenceToInsert = theSentences[i]
+            let timeToInsert = theTimes[i]
+            insert(sentence: sentenceToInsert, count: timeToInsert)
+        }
+    }
+    
+    func input(char: Character) -> [String] {
+        var result : [String] = []
+        
+        if currentNode == nil { currentNode = rootNode }
+        
+        if char == "#" {
+            insert(sentence: mutableStringBuffer, count: 1)
+            reset()
+            return result
+        }
+        
+        mutableStringBuffer.append(char)
+        if currentNode?.children[char] == nil {
+            currentNode?.children[char] = ACNode()
+            currentNode = currentNode?.children[char]
+        }
+        
+        //Top 3 (or whatever) results
+        result.append(contentsOf: findTop(node: currentNode!, k: 3))
+
+        return result
+    }
+    
+    func findTop(node: ACNode, k: Int) -> [String] {
+
+        print("--- NODE --- \(node.frequency) -- \(node.children)")
+        
+        var result : [String] = []
+        
+        if node.frequency.isEmpty { return result }
+        let frequencySorted = node.frequency.sorted(by: { $0.value < $1.value })
+        
+        for (key, value) in frequencySorted {
+            print("--- DICT VAL ---\(value)")
+            result.append(key)
+        }
+        
+        return result
+    }
+    
+    func insert(sentence: String?, count: Int) {
+        guard let theSentence = sentence else { return }
+        if theSentence.count == 0 { return }
+        
+        var node = rootNode
+        
+        let strArray = Array(theSentence)
+        for char in strArray {
+            if node!.children[char] == nil { node!.children[char] = ACNode() }
+            node = node!.children[char]
+            node!.frequency[theSentence] = (node!.frequency[theSentence] ?? 0) + count
+        }
+        node!.isEnd = true
+    }
+        
+    
+    func reset() {
+        currentNode = nil
+        mutableStringBuffer = ""
+    }
+}
+
+class ACNode {
+    var isEnd : Bool = false
+    var frequency : Dictionary<String, Int>
+    var children : Dictionary<Character, ACNode>
+    
+    init() {
+        self.frequency = [:]
+        self.children = [:]
+    }
+}
+
+//Not using this yet
+//class Pair {
+//    var str : String
+//    var count : Int
+//
+//    init() {
+//        self.str = ""
+//        self.count = 0
+//    }
+//}

@@ -21,8 +21,9 @@ typealias ContentItem = [[String : Any]]
 
 class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
     
-    var scrollView : UIScrollView = {
+    lazy var scrollView : UIScrollView = {
         let sv = UIScrollView()
+        print("SV prepare") //lazy var, this won't be hit until needed / computed unecessarily (not thread safe)
         return sv
     }()
     
@@ -37,19 +38,19 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
     
     func setupScroll() {
         //scroll
-        scrollView = UIScrollView(frame: self.bounds)
+        
+        scrollView.frame = self.bounds
         scrollView.delegate = self
         scrollView.contentSize = CGSize(width: Int(self.bounds.size.width) * algorithmArray().count, height: 0)
         scrollView.isPagingEnabled = true
-        self.addSubview(scrollView)
         
         //TODO page control?
         
         //content
-        
-        viewArray.removeAll()
         clearScrollView()
         
+        self.addSubview(scrollView)
+ 
         var x = CGFloat(0.0)
         
         for i in 0..<algorithmArray().count {
@@ -89,6 +90,10 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
     fileprivate func clearScrollView() {
         for theView in viewArray {
             theView.removeFromSuperview()
+        }
+        viewArray.removeAll()
+        for svSubview in scrollView.subviews {
+            svSubview.removeFromSuperview()
         }
     }
     

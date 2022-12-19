@@ -19,7 +19,7 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     */
     
     //Sub scroll picker
-    lazy var scrollPicker : SubChoiceScroll = {
+    var scrollPicker : SubChoiceScroll = {
         let scs = SubChoiceScroll()
         return scs
     }()
@@ -50,7 +50,7 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     
     //TODO add more + better colors
     fileprivate func contentForSubScroll() -> ContentItem {
-        return [[titleKey: "Compare Trees", colorKey: UIColor.white], [titleKey: "Autocomplete Trie", colorKey: UIColor.yellow]]
+        return [[titleKey: "Compare Trees", colorKey: UIColor.darkGray], [titleKey: "Autocomplete Trie", colorKey: UIColor.darkGray]]
     }
     
     @objc fileprivate func renderSubScroll() {
@@ -222,7 +222,9 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
         
         //Remove Node views
         for theView in self.subviews {
-            theView.removeFromSuperview()
+            if !theView.isKind(of: SubChoiceScroll.self) {
+                theView.removeFromSuperview()
+            }
         }
         
         //Remove bezier paths (layers) ?
@@ -270,6 +272,9 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
 
 //Credit
 //https://stackoverflow.com/questions/42543007/how-to-solve-string-interpolation-produces-a-debug-description-for-an-optional
+
+//frozen: no new cases
+//@frozen enum Optional<Wrapped>
 
 extension Optional {
     var logable: Any {

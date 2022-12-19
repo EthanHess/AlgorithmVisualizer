@@ -294,8 +294,10 @@ class Algorithmator: NSObject {
     
     //}
     
+    typealias NotificationVal = [AnyHashable: Any]
+    
     //MARK: Main notif post (the UIKit version of Publishers / Subscribers)
-    static func postNotifcationWithVal(val: [AnyHashable: Any], name: String) {
+    static func postNotifcationWithVal(val: NotificationVal, name: String) {
         NotificationCenter.default.post(name: Notification.Name(name), object: val.self, userInfo: val)
     }
     

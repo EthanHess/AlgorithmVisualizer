@@ -20,7 +20,7 @@ class SubChoiceScroll: UIView, UIScrollViewDelegate {
     
     var contentArray : ContentItem = [] {
         didSet {
-            setupScroll()
+            self.perform(#selector(setupScroll), with: nil, afterDelay: 0.25)
         }
     }
     
@@ -31,9 +31,9 @@ class SubChoiceScroll: UIView, UIScrollViewDelegate {
         
     }
     
-    func setupScroll() {
+    @objc fileprivate func setupScroll() {
         //scroll
-        scrollView = UIScrollView(frame: self.bounds)
+        scrollView.frame = self.bounds
         scrollView.delegate = self
         scrollView.contentSize = CGSize(width: Int(self.bounds.size.width) * contentArray.count, height: 0)
         scrollView.isPagingEnabled = true
