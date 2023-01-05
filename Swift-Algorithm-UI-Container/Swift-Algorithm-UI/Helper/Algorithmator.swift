@@ -878,6 +878,49 @@ class Algorithmator: NSObject {
 //            accumulator + current
 //        })
     }
+    
+    
+    //MARK: Longest common prefix
+    
+    static func longestCommonPrefix(_ strs: [String]) -> String {
+        //Brute force (first) approach, iterate strings (n) as well as all chars in that string (also n) On^2 (meh complexity)
+        
+        //Note On^2 would be worst case scenario since we'll just compare first of each to start, and if threre's no match return nothing, no need to iterate through all characters
+        var result = ""
+        var indexToCompare = 0
+        var storageAtIndex : Storage = [:]
+        
+        recursionCompare(strs, indexToCompare: &indexToCompare, result: &result, storageAtIndex: &storageAtIndex)
+        
+        return result
+    }
+
+    typealias Storage = [Int: String]
+    
+    static func recursionCompare(_ strs: [String], indexToCompare: inout Int, result: inout String, storageAtIndex: inout Storage) {
+        for i in 0..<strs.count {
+            let charArray = Array(strs[i])
+            let char = indexToCompare >= charArray.count ? nil : charArray[indexToCompare] //This would crash unless checked
+            let charString = char != nil ? String(char!) : nil
+            
+            if charString != nil {
+                //If nothing, first one, add
+                print("\(storageAtIndex.isEmpty) - \(storageAtIndex)")
+                if storageAtIndex[indexToCompare] == nil { storageAtIndex[indexToCompare] = charString }
+                //index to compare is 0, add all for 0 and compare previous, if all are the same, increment index
+                if storageAtIndex[indexToCompare] == charString {
+                    //No need to add to dict, just keep going
+                    if i == strs.count-1 {
+                        result += charString!
+                        indexToCompare += 1 //Make sure index isn't out of range if one string is short
+                        recursionCompare(strs, indexToCompare: &indexToCompare, result: &result, storageAtIndex: &storageAtIndex)
+                    }
+                } else {
+                    //Do nothing, no common prefix
+                }
+            }
+        }
+    }
 }
 
 

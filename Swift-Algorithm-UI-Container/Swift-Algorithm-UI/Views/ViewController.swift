@@ -96,7 +96,13 @@ class ViewController: UIViewController, ScrollHandler {
         self.view.gradientWithColors(colorOne: .cyan, colorTwo: .white)
         
         //Will now be called individually on scroll click
-        algorithmTest()
+        //algorithmTest()
+        longestCommonPrefix()
+    }
+    
+    fileprivate func longestCommonPrefix() {
+        let arr = ["flower","fl","floght"]
+        let returnStr = Algorithmator.longestCommonPrefix(arr)
     }
     
     //MARK: Setup tab bar, this is just a test
