@@ -101,8 +101,9 @@ class ViewController: UIViewController, ScrollHandler {
     }
     
     fileprivate func longestCommonPrefix() {
-        let arr = ["flower","fl","floght"]
+        let arr = ["aac","acab","aa","abba","aa"]
         let returnStr = Algorithmator.longestCommonPrefix(arr)
+        print("ARR \(returnStr)")
     }
     
     //MARK: Setup tab bar, this is just a test
