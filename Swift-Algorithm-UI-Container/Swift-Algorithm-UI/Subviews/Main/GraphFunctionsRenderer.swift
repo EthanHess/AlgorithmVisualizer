@@ -39,7 +39,7 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
         //MARK: Whatever is needed for init
         //self.backgroundColor = .systemGreen
         self.layer.cornerRadius = 5
-        self.layer.masksToBounds = true
+       // self.layer.masksToBounds = true //May prevent border fro showing
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.gray.cgColor
 //        self.backgroundColor = .darkGray

@@ -97,7 +97,8 @@ class ViewController: UIViewController, ScrollHandler {
         
         //Will now be called individually on scroll click
         //algorithmTest()
-        longestCommonPrefix()
+        //longestCommonPrefix()
+        validParenthesisWrapper()
     }
     
     fileprivate func longestCommonPrefix() {
@@ -175,10 +176,20 @@ class ViewController: UIViewController, ScrollHandler {
 //        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension)")
         
         
-        calculatorWrapper()
+        //calculatorWrapper()
     }
     
-    //TODO: wrap others (don't crowd lifecycle functions)
+    fileprivate func validParenthesisWrapper() {
+        let firstVP = Algorithmator.isValid("({{{{}}}))")
+        let secondVP = Algorithmator.isValid("[](){}")
+        let thirdVP = Algorithmator.isValid("{[]}")
+        let fourthVP = Algorithmator.isValid("()")
+        let fifthVP = Algorithmator.isValid("({[)")
+        
+        print("VP Result \(firstVP) \(secondVP) \(thirdVP) \(fourthVP) \(fifthVP)")
+    }
+    
+    //TODO: wrap others (don't crowd lifecyc=le functions)
     fileprivate func calculatorWrapper() {
         let solutionCalculatorOne = Algorithmator.calculate("3+2*2")
         let solutionCalculatorTwo = Algorithmator.calculate(" 3/2 ")
@@ -218,15 +229,7 @@ class ViewController: UIViewController, ScrollHandler {
         originalGraphFrame = graphRenderer.frame
         view.addSubview(graphRenderer)
         
-        //Extension
-        graphRenderer.layer.shadowOffset = CGSize(width: 10,
-                                                 height: 10)
-        graphRenderer.layer.shadowRadius = 5
-        graphRenderer.layer.shadowOpacity = 0.3
-        graphRenderer.customShadowPath(shadowHeight: 5)
-        
-        //Local func
-        //addShadowToView(graphRenderer)
+        addShadow(graphRenderer, color: .gray)
     }
     
     fileprivate func collectionSetup() {
@@ -247,8 +250,7 @@ class ViewController: UIViewController, ScrollHandler {
         
         collection.register(AlgorithmCollectionCell.self, forCellWithReuseIdentifier: "aCell")
         
-        //Local function
-        addShadowToView(collection)
+        addShadow(collection, color: .gray)
     }
     
     fileprivate func calculatorSetup() {
@@ -268,12 +270,14 @@ class ViewController: UIViewController, ScrollHandler {
     
     //Adding shadows is generally expensive. You can either rasterize (convert to pixels then display) or use shadowPath. Rasterizing can be the better option provided your view isn't dynamic (changing size or moving).
     
-    //Move to "extensions" file + make extension
-    fileprivate func addShadowToView(_ view: UIView) {
-        view.layer.shadowColor = UIColor.lightGray.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 10
+    fileprivate func addShadow(_ view: UIView, color: UIColor) {
+        let layer = view.layer
+        layer.masksToBounds = false
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = 0.5 //alpha
+        layer.shadowOffset = CGSize(width: 1, height: 1)
+        layer.shadowRadius = 2
+        layer.shouldRasterize = false //rasterize means convert image into pixels (bitmap)
     }
     
     

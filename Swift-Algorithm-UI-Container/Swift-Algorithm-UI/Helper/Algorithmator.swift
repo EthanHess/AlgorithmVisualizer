@@ -938,6 +938,57 @@ class Algorithmator: NSObject {
                 }
             }
     }
+    
+    //MARK: Valid parenthesis
+    
+    // "({{{{}}}))"
+    // "[](){}"
+    // "{[]}"
+    // "()" //2 count takes care of this
+    
+    //"({[)"
+    
+    //Approach, stack rather than pure conditionals (thought that could work but no)
+    //Works :)
+    
+    static func isValid(_ s: String) -> Bool {
+        if !isEven(s) {
+            return false
+        }
+        var result = false
+        isValidWrapper(&result, str: s)
+        return result
+    }
+
+    static let leftCorresponding : [String: String] = ["[": "]", "(": ")", "{": "}"]
+
+    static func isEven(_ str: String) -> Bool {
+        return str.count % 2 == 0
+    }
+
+    static func isLeft(_ str: String) -> Bool {
+        return str == "[" || str == "(" || str == "{"
+    }
+    
+    //Stack approach
+    static func isValidWrapper(_ result: inout Bool, str: String) {
+        var leftSymbols : [String] = []
+        let charArr = Array(str)
+    
+        var totalLeftCount = 0
+        for i in 0..<charArr.count {
+            let char = String(charArr[i])
+            if isLeft(char) { leftSymbols.append(char) }
+            if isLeft(char) { totalLeftCount += 1}
+            if !leftSymbols.isEmpty {
+                if char == leftCorresponding[leftSymbols[leftSymbols.count-1]] {
+                    leftSymbols.removeLast()
+                }
+            }
+        }
+        
+        result = leftSymbols.count == 0 && totalLeftCount == str.count / 2
+    }
 }
 
 
