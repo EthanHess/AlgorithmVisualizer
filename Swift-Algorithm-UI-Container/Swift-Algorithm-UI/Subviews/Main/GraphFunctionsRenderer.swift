@@ -37,12 +37,9 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
         super.init(frame: frame)
         
         //MARK: Whatever is needed for init
-        //self.backgroundColor = .systemGreen
-        self.layer.cornerRadius = 5
        // self.layer.masksToBounds = true //May prevent border fro showing
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.gray.cgColor
-//        self.backgroundColor = .darkGray
+
+        self.layer.cornerRadius = 3
         
         //renderSubScroll()
         perform(#selector(renderSubScroll), with: nil, afterDelay: 0.25)
@@ -54,6 +51,8 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     }
     
     @objc fileprivate func renderSubScroll() {
+        self.gradientWithColors(colorOne: .white, colorTwo: .lightGray)
+        
         let vw = self.frame.size.width
         let vh = self.frame.size.height
         
@@ -80,12 +79,8 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     //MARK: Double Trees
     fileprivate func renderDoubleTreesAfterSetup(_ rootNodeLeftTree: TreeNode?, _ rootNodeRightTree: TreeNode?) {
         
-        guard let rnlt = rootNodeLeftTree else {
-            return
-        }
-        guard let rnrt = rootNodeRightTree else {
-            return
-        }
+        guard let rnlt = rootNodeLeftTree else { return }
+        guard let rnrt = rootNodeRightTree else { return }
         
         let leftTreeHeight = determineTreeHeight(rnlt)
         let rightTreeHeight = determineTreeHeight(rnrt)
@@ -111,9 +106,7 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     }
     
     fileprivate func beginRecursiveSetupWithRoot(_ parent: TreeNode?, parentUI: NodeView?) {
-        guard let parentNode = parent else {
-            return
-        }
+        guard let parentNode = parent else { return }
         
         //MARK: For consistency sake the child node will be two node widths at a 45 degree angle left / right
         
@@ -175,9 +168,7 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     //MARK: O(n), n being number of nodes, best case scenario O(1) (one node)
     
     fileprivate func determineTreeHeight(_ root: TreeNode?) -> Int {
-        if root == nil {
-            return 0
-        }
+        if root == nil { return 0 }
         let leftHeight = determineTreeHeight(root?.left)
         let rightHeight = determineTreeHeight(root?.right)
         return max(leftHeight, rightHeight) + 1
@@ -188,7 +179,6 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     
     func setUpTreeToRender(_ rootNode: TreeNode?) {
         renderTreeAfterSetup(rootNode)
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.rotateBinaryWrapper(rootNode)
         }
@@ -197,12 +187,9 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     
     //Single tree
     fileprivate func renderTreeAfterSetup(_ rootNode: TreeNode?) {
-        guard let tn = rootNode else {
-            return
-        }
+        guard let tn = rootNode else { return }
         
         let treeHeight = determineTreeHeight(tn)
-        
         print("TREE HEIGHT \(treeHeight)")
         
         let nodeView = NodeView(frame: nodeFrameWithTreeHeightDoubleTree(treeHeight, leftTree: true)) //For now we'll use the left tree for single but eventually center
@@ -232,13 +219,9 @@ class GraphFunctionsRenderer: UIView, ScrollIndexDidChange {
     }
     
     fileprivate func rotateBinaryTreeThenRerender(_ root: TreeNode?) -> TreeNode? {
-        if root == nil {
-            return root
-        }
+        if root == nil { return root }
         let noChildren = root?.left == nil && root?.right == nil
-        if noChildren {
-            return root
-        }
+        if noChildren { return root }
         
         let rotatedRoot = rotateBinaryTreeThenRerender(root?.left)
         

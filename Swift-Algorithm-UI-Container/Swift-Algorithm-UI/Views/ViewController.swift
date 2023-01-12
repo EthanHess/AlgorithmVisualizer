@@ -98,7 +98,13 @@ class ViewController: UIViewController, ScrollHandler {
         //Will now be called individually on scroll click
         //algorithmTest()
         //longestCommonPrefix()
-        validParenthesisWrapper()
+        //validParenthesisWrapper()
+        permutationTest()
+    }
+    
+    fileprivate func permutationTest() {
+        let permutationArr = Algorithmator.permute([1,2,3])
+        print("PERMUTATION \(permutationArr)")
     }
     
     fileprivate func longestCommonPrefix() {
@@ -196,8 +202,6 @@ class ViewController: UIViewController, ScrollHandler {
         let solutionCalculatorThree = Algorithmator.calculate(" 3+5 / 2 ")
         
         print("-- CALCULATOR SOLUTIONS \(solutionCalculatorOne) -- \(solutionCalculatorTwo) -- \(solutionCalculatorThree) --")
-        
-        //print("-- CALCULATOR SOLUTIONS \(solutionCalculatorOne) --")
     }
     
     fileprivate func UIConfig() {
@@ -237,6 +241,7 @@ class ViewController: UIViewController, ScrollHandler {
         let vh = self.view.frame.size.height
         
         collection.frame = CGRect(x: 20, y: vh / 3.5, width: vw - 40, height: vh / 2)
+        collection.layer.cornerRadius = 3
         view.addSubview(collection)
         
         //MARK: This works but won't animate w/o animating constraints
@@ -247,7 +252,6 @@ class ViewController: UIViewController, ScrollHandler {
         
         collection.delegate = self
         collection.dataSource = self
-        
         collection.register(AlgorithmCollectionCell.self, forCellWithReuseIdentifier: "aCell")
         
         addShadow(collection, color: .gray)
@@ -276,7 +280,7 @@ class ViewController: UIViewController, ScrollHandler {
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = 0.5 //alpha
         layer.shadowOffset = CGSize(width: 1, height: 1)
-        layer.shadowRadius = 2
+        layer.shadowRadius = 3
         layer.shouldRasterize = false //rasterize means convert image into pixels (bitmap)
     }
     
@@ -450,18 +454,10 @@ class ViewController: UIViewController, ScrollHandler {
     }
     
     func inorderCheck(_ root: TreeNode?, list: inout [Int]) -> Bool {
-        guard let theRoot = root else {
-            return true
-        }
-        
-        if inorderCheck(theRoot.left, list: &list) == false {
-            return false
-        }
-        if list.isEmpty == true || list[0] != theRoot.val {
-            return false
-        }
+        guard let theRoot = root else { return true }
+        if inorderCheck(theRoot.left, list: &list) == false { return false }
+        if list.isEmpty == true || list[0] != theRoot.val { return false }
         list.remove(at: 0)
-        
         return inorderCheck(theRoot.right, list: &list)
     }
     
@@ -474,7 +470,7 @@ class ViewController: UIViewController, ScrollHandler {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //Should have "isObserving" boolean just in case
+        //Should have "isObserving" boolean just in case, may crash
         NotificationCenter.default.removeObserver(self)
     }
 }

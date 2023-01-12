@@ -989,6 +989,100 @@ class Algorithmator: NSObject {
         
         result = leftSymbols.count == 0 && totalLeftCount == str.count / 2
     }
+    
+    //MARK: Roman to Int (works :))
+    static func romanToInt(_ s: String) -> Int {
+        let charArray = Array(s)
+        var result = 0
+        var indexToSkip = charArray.count //if we find pair, skip the second index
+        for i in 0..<charArray.count {
+            let char = charArray[i]
+            let charString = String(char)
+            //Check double char combination if not the last index
+            if i != charArray.count-1 {
+                let nextChar = charArray[i+1]
+                let nextCharString = String(nextChar)
+                if someCombination(charString, nextChar: nextCharString) == true {
+                    let substring = "\(charString)\(nextCharString)"
+                    result += RICombinedSymbolMap(substring)
+                    indexToSkip = i+1
+                } else {
+                    if i != indexToSkip {
+                        result += RISymbolMap(charString)
+                    }
+                }
+            } else {
+                if i != indexToSkip {
+                    result += RISymbolMap(charString)
+                }
+            }
+        }
+        return result
+    }
+
+    //NOTE:
+    //I can be placed before V (5) and X (10) to make 4 and 9.
+    //X can be placed before L (50) and C (100) to make 40 and 90.
+    //C can be placed before D (500) and M (1000) to make 400 and 900.
+
+    static func RICombinedSymbolMap(_ s: String) -> Int {
+        let mapper = ["IV": 4,
+                      "IX": 9,
+                      "XL": 40,
+                      "XC": 90,
+                      "CD": 400,
+                      "CM": 900]
+        return mapper[s] ?? 0
+    }
+
+    static func someCombination(_ curChar: String, nextChar: String) -> Bool {
+        return curChar == "I" && nextChar == "X" || curChar == "I" && nextChar == "V" || curChar == "X" && nextChar == "L" || curChar == "X" && nextChar == "C" || curChar == "C" && nextChar == "D" || curChar == "C" && nextChar == "M"
+    }
+
+    static func RISymbolMap(_ s: String) -> Int {
+        let mapper = ["I": 1,
+                      "V": 5,
+                      "X": 10,
+                      "L": 50,
+                      "C": 100,
+                      "D": 500,
+                      "M": 1000]
+        return mapper[s] ?? 0
+    }
+    
+    //MARK: Permute
+    static func permute(_ nums: [Int]) -> [[Int]] {
+        //MARK: Get easy cases out of the way
+        if nums.count == 1 { return [nums] }
+        if nums.count == 2 { return [nums, nums.reversed()] }
+        
+        var result : [[Int]] = []
+        var visited : [Int: Bool] = [:]
+        var current : [Int] = []
+        visited.reserveCapacity(nums.count)
+        
+        //MARK: Logic
+        permuteRecursionDFS(nums, result: &result, current: &current, visited: &visited)
+
+        return result
+    }
+
+    //Recursion (Depth first)
+    static func permuteRecursionDFS(_ nums: [Int], result: inout [[Int]], current: inout [Int], visited: inout [Int: Bool]) {
+        if current.count == nums.count { //have reached the end of one possibility and need to add to result
+            result.append(current)
+            return
+        }
+        for i in 0..<nums.count {
+            if visited[i] == nil || visited[i] == false {
+                visited[i] = true
+                current.append(nums[i])
+                permuteRecursionDFS(nums, result: &result, current: &current, visited: &visited)
+                current.removeLast()
+                visited[i] = false
+            }
+        }
+    }
 }
 
 
