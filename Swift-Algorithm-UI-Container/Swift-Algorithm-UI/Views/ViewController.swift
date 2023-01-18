@@ -53,6 +53,11 @@ class ViewController: UIViewController, ScrollHandler {
         return sr
     }()
     
+    lazy var arrayRenderer : ArrayFunctionsRenderer = {
+        let ar = ArrayFunctionsRenderer()
+        return ar
+    }()
+    
     lazy var calculatorRenderer : CalculatorView = {
         let cr = CalculatorView()
         return cr
@@ -99,7 +104,16 @@ class ViewController: UIViewController, ScrollHandler {
         //algorithmTest()
         //longestCommonPrefix()
         //validParenthesisWrapper()
-        permutationTest()
+        //permutationTest()
+        
+        rainwaterTest()
+    }
+    
+    fileprivate func rainwaterTest() {
+        let trapWaterOne = Algorithmator.trap([0,1,0,2,1,0,1,3,2,1,2,1]) //6
+        let trapWaterTwo = Algorithmator.trap([4,2,0,3,2,5]) //9
+        
+        print("TRAP WATER \(trapWaterOne) -- \(trapWaterTwo)")
     }
     
     fileprivate func permutationTest() {
@@ -195,7 +209,7 @@ class ViewController: UIViewController, ScrollHandler {
         print("VP Result \(firstVP) \(secondVP) \(thirdVP) \(fourthVP) \(fifthVP)")
     }
     
-    //TODO: wrap others (don't crowd lifecyc=le functions)
+    //TODO: wrap others (don't crowd lifecycle functions)
     fileprivate func calculatorWrapper() {
         let solutionCalculatorOne = Algorithmator.calculate("3+2*2")
         let solutionCalculatorTwo = Algorithmator.calculate(" 3/2 ")
@@ -221,8 +235,9 @@ class ViewController: UIViewController, ScrollHandler {
         
         collectionSetup()
         containersSetup()
-        
         //calculatorSetup() //Not offscreen yet, just UI test
+        
+        arrayRendererSetup()
     }
     
     //MARK: Graph / Strings subviews etc.
@@ -265,11 +280,21 @@ class ViewController: UIViewController, ScrollHandler {
         view.addSubview(calculatorRenderer)
         
         //Extension
-        calculatorRenderer.layer.shadowOffset = CGSize(width: 10,
-                                                 height: 10)
-        calculatorRenderer.layer.shadowRadius = 5
-        calculatorRenderer.layer.shadowOpacity = 0.3
-        calculatorRenderer.customShadowPath(shadowHeight: 5)
+//        calculatorRenderer.layer.shadowOffset = CGSize(width: 10,
+//                                                 height: 10)
+//        calculatorRenderer.layer.shadowRadius = 5
+//        calculatorRenderer.layer.shadowOpacity = 0.3
+        //calculatorRenderer.customShadowPath(shadowHeight: 5)
+    }
+    
+    fileprivate func arrayRendererSetup() {
+        let vw = self.view.frame.size.width
+        let vh = self.view.frame.size.height
+        
+        arrayRenderer.frame = CGRect(x: 20, y: vh / 3.5, width: vw - 40, height: vh / 2)
+        view.addSubview(arrayRenderer)
+        
+        arrayRenderer.rainwaterAnimation([])
     }
     
     //Adding shadows is generally expensive. You can either rasterize (convert to pixels then display) or use shadowPath. Rasterizing can be the better option provided your view isn't dynamic (changing size or moving).

@@ -26,7 +26,11 @@ class ArrayFunctionsRenderer: UIView {
     */
     
     //TODO subclass + stylize
+    //For basic array functions
     var viewArray : [UILabel] = []
+    
+    //Rainwater
+    var rainwaterArray : [RainwaterContainer] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -114,5 +118,18 @@ class ArrayFunctionsRenderer: UIView {
     
     fileprivate func swapValues(_ leftStartIndex: Int, rightStartIndex: Int, leftDestinationIndex: Int, rightDestinationIndex: Int, array: [Int]) {
         
+    }
+    
+    //MARK: Rainwater trapper rendering, water will be drawn with bezier path and container will be solid block
+    
+    func rainwaterAnimation(_ heights: [Int]) {
+        //Add all first then turn the appropriate ones into water
+        
+        //MARK: Test
+        
+        let rc = RainwaterContainer()
+        rc.frame = self.bounds
+        rc.configureWithMode(false)
+        addSubview(rc)
     }
 }

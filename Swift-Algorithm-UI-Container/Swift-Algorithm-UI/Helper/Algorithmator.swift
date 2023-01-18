@@ -1083,6 +1083,42 @@ class Algorithmator: NSObject {
             }
         }
     }
+    
+    //MARK: Rainwater trapper (Works! :))
+    static func trap(_ height: [Int]) -> Int {
+        
+        //MARK: Logic / possible approaches
+        //Pointer approach, left, right pointer keeping track of maxes
+        var result = 0
+        
+        var leftMax = 0
+        var rightMax = 0
+        var leftPointer = 0
+        var rightPointer = height.count-1
+        
+        //Time: O(n) where n = array length
+        //Space: O(1) since we're using existing resources
+        while leftPointer < rightPointer {
+            if height[leftPointer] < height[rightPointer] {
+                if height[leftPointer] < leftMax { //cur is less than left and right (can contain water)
+                    result += leftMax - height[leftPointer] //if cur is 1, and left max is 5, depth is 4, we know from clause that we're below right side as well
+                } else {
+                    leftMax = height[leftPointer] //set new max if is the highest so far
+                }
+                //No matter what, increment
+                leftPointer += 1
+            } else {
+                if height[rightPointer] < rightMax {
+                    result += rightMax - height[rightPointer] //eg if cur is 3, and max is 6, depth here is 3
+                } else { //Set new
+                    rightMax = height[rightPointer]
+                }
+                rightPointer -= 1 //going backwards (left to right)
+            }
+        }
+        
+        return result
+    }
 }
 
 
