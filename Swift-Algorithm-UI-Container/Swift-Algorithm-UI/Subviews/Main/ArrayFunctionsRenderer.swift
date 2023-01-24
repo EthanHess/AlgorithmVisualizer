@@ -126,10 +126,29 @@ class ArrayFunctionsRenderer: UIView {
         //Add all first then turn the appropriate ones into water
         
         //MARK: Test
-        
         let rc = RainwaterContainer()
         rc.frame = self.bounds
         rc.configureWithMode(false)
         addSubview(rc)
+        
+        let rcTwo = RainwaterContainer()
+        rcTwo.frame = self.bounds
+        rcTwo.configureWithMode(false)
+        rcTwo.editShapelayerColors(UIColor.blue.cgColor, stroke: UIColor.white.cgColor)
+        addSubview(rcTwo)
+        
+        let rcThree = RainwaterContainer()
+        rcThree.frame = self.bounds
+        rcThree.configureWithMode(false)
+        rcThree.editShapelayerColors(UIColor.black.cgColor, stroke: UIColor.lightGray.cgColor)
+        addSubview(rcThree)
+        
+        //Looks good this size for when we vizualize rainwater problem
+        //Can make top water views observe line position of the one's next to it so the water line animates as one.
+        
+//        let miniContainer = RainwaterContainer()
+//        miniContainer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+//        miniContainer.configureWithMode(false)
+//        addSubview(miniContainer)
     }
 }

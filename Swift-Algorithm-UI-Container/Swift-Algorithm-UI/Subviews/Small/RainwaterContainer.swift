@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: Attempted this on my own and used this StackOverflow link for some reference
+//MARK: Attempted this on my own and used this StackOverflow link for reference
 //https://stackoverflow.com/questions/60762757/how-can-i-properly-animate-a-uibezierpath-to-have-a-water-wave-effect
 
 class RainwaterContainer: UIView {
@@ -53,9 +53,14 @@ class RainwaterContainer: UIView {
             backgroundColor = .black
             //configureGradient([])
         } else { //transparent background,
-            backgroundColor = .clear
+            backgroundColor = .clear.withAlphaComponent(0)
             configureBezier()
         }
+    }
+    
+    func editShapelayerColors(_ fill: CGColor, stroke: CGColor) {
+        shapeLayer.fillColor = fill
+        shapeLayer.strokeColor = stroke
     }
     
     fileprivate func configureBezier() {

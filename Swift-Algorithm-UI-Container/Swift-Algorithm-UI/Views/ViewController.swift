@@ -106,7 +106,17 @@ class ViewController: UIViewController, ScrollHandler {
         //validParenthesisWrapper()
         //permutationTest()
         
-        rainwaterTest()
+        //rainwaterTest()
+        
+        subarraysDivisibleByK()
+    }
+    
+    fileprivate func subarraysDivisibleByK() {
+
+        let countOne = Algorithmator.subarraysDivByK([4,5,0,-2,-3,1], 5)
+        let countTwo = Algorithmator.subarraysDivByK([5], 9)
+        
+        print("SUBARR CO CT \(countOne) \(countTwo)")
     }
     
     fileprivate func rainwaterTest() {

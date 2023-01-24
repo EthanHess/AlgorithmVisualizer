@@ -1119,6 +1119,45 @@ class Algorithmator: NSObject {
         
         return result
     }
+    
+    
+    //[4,5,0,-2,-3,1], k = 5
+    
+    //MARK: Subarrays divisible by k
+    static func subarraysDivByK(_ nums: [Int], _ k: Int) -> Int {
+        
+        //NOTE: We need to make sure that we don't duplicate combinations (i.e. [1,2,3] and [2,1,3] would both return the same answer if divisible by k)
+        
+        //count remainders (modulo %)
+        var storageArray : [Int] = []
+        
+        for i in 0..<k {
+            print("\(i)")
+            storageArray.append(0)
+        }
+        
+        var cumulativeSum = 0
+        for i in 0..<nums.count {
+            cumulativeSum += nums[i] //Adding array together + check for negatives
+            let toAdd = ((cumulativeSum % k) + k) % k
+            storageArray[toAdd] += 1
+        }
+        
+        var result = 0
+        for i in 0..<k {
+            //if remainder is 0, is divisible (how modulus works)
+            if storageArray[i] > 1 {
+                let rightOperand = Int((storageArray[i] * (storageArray[i]-1)) / 2)
+                result += rightOperand
+                print("RESULT SET FL \(result)");
+            }
+        }
+        
+        result += storageArray[0]
+        print("RESULT SET OFL \(result)");
+        
+        return result
+    }
 }
 
 
