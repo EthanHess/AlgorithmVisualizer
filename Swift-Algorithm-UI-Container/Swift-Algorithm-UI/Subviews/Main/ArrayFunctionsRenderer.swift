@@ -28,6 +28,7 @@ class ArrayFunctionsRenderer: UIView {
     //TODO subclass + stylize
     //For basic array functions
     var viewArray : [UILabel] = []
+    var isObserving = false
     
     //Rainwater
     var rainwaterArray : [RainwaterContainer] = []
@@ -39,6 +40,12 @@ class ArrayFunctionsRenderer: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //When algorithm calculates, it will tell this view how to set up UI
+    fileprivate func observe() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationInfo(_:)), name: Notification.Name(kAlgorithmUpdateNotificationRainwater), object: nil)
+        isObserving = true
     }
     
     fileprivate func clear() {
@@ -122,8 +129,15 @@ class ArrayFunctionsRenderer: UIView {
     
     //MARK: Rainwater trapper rendering, water will be drawn with bezier path and container will be solid block
     
+    @objc fileprivate func handleNotificationInfo(_ notif: Notification) {
+        print("Observed data AR \(notif.userInfo)")
+    }
+    
+    //Initial setup
     func rainwaterAnimation(_ heights: [Int]) {
         //Add all first then turn the appropriate ones into water
+        
+        observe()
         
         //MARK: Test
         let rc = RainwaterContainer()
@@ -150,5 +164,22 @@ class ArrayFunctionsRenderer: UIView {
 //        miniContainer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
 //        miniContainer.configureWithMode(false)
 //        addSubview(miniContainer)
+    }
+    
+    //Changing to water / calculating max
+    
+    fileprivate func initialSetup(_ height: [Int]) {
+        //let cubeHeight =
+    }
+    
+    fileprivate func updateContainers(_ index: Int, height: Int) {
+        
+    }
+    
+    //Destruction
+    deinit {
+        if isObserving == true {
+            NotificationCenter.default.removeObserver(self)
+        }
     }
 }

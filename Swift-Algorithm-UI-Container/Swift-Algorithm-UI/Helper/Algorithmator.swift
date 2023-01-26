@@ -1096,10 +1096,17 @@ class Algorithmator: NSObject {
         var leftPointer = 0
         var rightPointer = height.count-1
         
+        //Set up UI for algorithm renderer
+        postNotifcationWithVal(val: ["initialArray": height], name: kAlgorithmUpdateNotificationRainwater)
+        
         //Time: O(n) where n = array length
         //Space: O(1) since we're using existing resources
         while leftPointer < rightPointer {
             if height[leftPointer] < height[rightPointer] {
+                
+//                let dict = ["heightLeft": height[leftPointer], "heightRight": height[rightPointer]]
+//                postNotifcationWithVal(val: ["leftPointerLess": dict], name: kAlgorithmUpdateNotificationRainwater)
+                
                 if height[leftPointer] < leftMax { //cur is less than left and right (can contain water)
                     result += leftMax - height[leftPointer] //if cur is 1, and left max is 5, depth is 4, we know from clause that we're below right side as well
                 } else {

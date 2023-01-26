@@ -38,6 +38,7 @@
 		27C77EE327C8025500C74631 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C77EE227C8025500C74631 /* NodeView.swift */; };
 		27C77EE527C8027100C74631 /* DigitRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C77EE427C8027100C74631 /* DigitRenderer.swift */; };
 		27CA6D1C25AFB805006CA383 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA6D1B25AFB805006CA383 /* Extensions.swift */; };
+		27EDF0DB298326DD001C47ED /* StaticKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EDF0DA298326DD001C47ED /* StaticKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		27C77EE227C8025500C74631 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		27C77EE427C8027100C74631 /* DigitRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitRenderer.swift; sourceTree = "<group>"; };
 		27CA6D1B25AFB805006CA383 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		27EDF0DA298326DD001C47ED /* StaticKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,7 @@
 				275F378D27D9685F00FE8B82 /* DataFetcher.swift */,
 				275E556F25B64DB20065949E /* Algorithmator.swift */,
 				27CA6D1B25AFB805006CA383 /* Extensions.swift */,
+				27EDF0DA298326DD001C47ED /* StaticKeys.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				2733F829293EA5E800D5F30F /* CalculatorView.swift in Sources */,
 				274F8BAB25C640EE002198A3 /* TrieNode.swift in Sources */,
 				274332EF259969B60033C59D /* ViewController.swift in Sources */,
+				27EDF0DB298326DD001C47ED /* StaticKeys.swift in Sources */,
 				275F378C27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift in Sources */,
 				27AB881027BEC32B00E3B847 /* LogDebugging.swift in Sources */,
 				27C77EDF27C8004F00C74631 /* StringFunctionsRenderer.swift in Sources */,
