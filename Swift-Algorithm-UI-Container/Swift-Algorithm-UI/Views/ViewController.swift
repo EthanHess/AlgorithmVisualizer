@@ -139,14 +139,14 @@ class ViewController: UIViewController, ScrollHandler {
     
     //MARK: Setup tab bar, this is just a test
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        guard let navCon = navigationController else {
-//            print("No NC")
-//            return
-//        }
-//        let autocompleteView = AutocompleteViewController()
-//        navCon.pushViewController(autocompleteView, animated: true)
-//    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let navCon = navigationController else {
+            print("No NC")
+            return
+        }
+        let autocompleteView = AutocompleteViewController()
+        navCon.pushViewController(autocompleteView, animated: true)
+    }
     
     fileprivate func algorithmTest() {
         Algorithmator.recurSubviewsOfView(theView: self.view)

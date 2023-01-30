@@ -48,6 +48,9 @@ class AutocompleteViewController: UIViewController {
         print("AUTOCOMPLETE \(listForCChar)")
         
         self.view.gradientWithColors(colorOne: .orange, colorTwo: .white)
+        
+        //Other approach (True or False for now but will add list of possibilities)
+        setUpTrie()
     }
     
     //Simple autocomplete
@@ -242,3 +245,71 @@ class ACNode {
 //        self.count = 0
 //    }
 //}
+
+
+//MARK: Different approach (True or False for now but will add list of possibilities)
+
+extension AutocompleteViewController {
+    fileprivate func setUpTrie() {
+        let rootNode = AutocompleteNode(value: "")
+        let autocompleteTrie = AutocompleteTrie(root: rootNode)
+        
+        //Tests
+        autocompleteTrie.insert(word: "DOG")
+        let dgTest = autocompleteTrie.search(word: "DG")
+        let doTest = autocompleteTrie.search(word: "DOG")
+        
+        print("TF \(dgTest) -- \(doTest)")
+    }
+}
+
+typealias ChildMap = [String : AutocompleteNode]
+
+class AutocompleteNode {
+    var value : String
+    var isEnd : Bool
+    var children : ChildMap
+    
+    init(value: String, isEnd: Bool = false, children: ChildMap = [:]) {
+        self.value = value
+        self.isEnd = isEnd
+        self.children = children
+    }
+}
+
+class AutocompleteTrie {
+    var root : AutocompleteNode
+    init(root: AutocompleteNode) {
+        self.root = root
+    }
+    func insert(word: String) {
+        var current = self.root
+        for char in strToCharArray(word) {
+            let charString = charToString(char)
+            if (current.children[charString] == nil) {
+                current.children[charString] = AutocompleteNode(value: charString)
+            }
+            current = current.children[charString]!
+        }
+        current.isEnd = true
+    }
+    
+    //TODO append to options array to display in table
+    func search(word: String) -> Bool {
+        var current = self.root
+        for char in strToCharArray(word) {
+            let charString = charToString(char)
+            if (current.children[charString] == nil) {
+                return false
+            }
+            current = current.children[charString]!
+        }
+        return current.isEnd
+    }
+    func strToCharArray(_ str: String) -> Array<Character> {
+        return Array(str)
+    }
+    func charToString(_ char: Character) -> String {
+        return String(char)
+    }
+}
