@@ -108,7 +108,9 @@ class ViewController: UIViewController, ScrollHandler {
         
        // rainwaterTest()
         
-        subarraysDivisibleByK()
+        // subarraysDivisibleByK()
+        
+        calculatorWrapper()
     }
     
     fileprivate func subarraysDivisibleByK() {
@@ -204,9 +206,6 @@ class ViewController: UIViewController, ScrollHandler {
         
 //        let arrRemovalExtension = [1, 2, 3, 4].removeElements([3, 4])
 //        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension)")
-        
-        
-        //calculatorWrapper()
     }
     
     fileprivate func validParenthesisWrapper() {
@@ -288,13 +287,6 @@ class ViewController: UIViewController, ScrollHandler {
         
         calculatorRenderer.frame = CGRect(x: 20, y: vh / 3.5, width: vw - 40, height: vh / 2)
         view.addSubview(calculatorRenderer)
-        
-        //Extension
-//        calculatorRenderer.layer.shadowOffset = CGSize(width: 10,
-//                                                 height: 10)
-//        calculatorRenderer.layer.shadowRadius = 5
-//        calculatorRenderer.layer.shadowOpacity = 0.3
-        //calculatorRenderer.customShadowPath(shadowHeight: 5)
     }
     
     fileprivate func arrayRendererSetup() {

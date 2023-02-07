@@ -254,12 +254,22 @@ extension AutocompleteViewController {
         let rootNode = AutocompleteNode(value: "")
         let autocompleteTrie = AutocompleteTrie(root: rootNode)
         
-        //Tests
-        autocompleteTrie.insert(word: "DOG")
-        let dgTest = autocompleteTrie.search(word: "DG")
-        let doTest = autocompleteTrie.search(word: "DOG")
+        //Search test
+//        autocompleteTrie.insert(word: "DOG")
+//        let dgTest = autocompleteTrie.search(word: "DG")
+//        let doTest = autocompleteTrie.search(word: "DOG")
         
-        print("TF \(dgTest) -- \(doTest)")
+       // print("TF \(dgTest) -- \(doTest)")
+        
+        //TODO render trie w/ text field + table
+        
+        //Result test
+        //Both time and space are O(n) for this
+        let words = ["hello", "dog", "hell", "cat", "a", "hel", "help", "helps", "helping"]
+        for word in words {
+            autocompleteTrie.insert(word: word)
+        }
+        print("RESULT TEST \(autocompleteTrie.suggest("hel"))")
     }
 }
 
@@ -291,10 +301,10 @@ class AutocompleteTrie {
             }
             current = current.children[charString]!
         }
+        print("CURRENT INSERT \(current)")
         current.isEnd = true
     }
     
-    //TODO append to options array to display in table
     func search(word: String) -> Bool {
         var current = self.root
         for char in strToCharArray(word) {
@@ -304,12 +314,49 @@ class AutocompleteTrie {
             }
             current = current.children[charString]!
         }
+        print("CURRENT SEARCH \(current)")
         return current.isEnd
     }
+    
+    //Helper
     func strToCharArray(_ str: String) -> Array<Character> {
         return Array(str)
     }
     func charToString(_ char: Character) -> String {
         return String(char)
+    }
+    
+    //MARK:
+    func suggestionHelper(_ root: AutocompleteNode, list: inout [String], current: String) {
+        if root.isEnd {
+            list.append(current)
+        }
+        if root.children.isEmpty {
+            return
+        }
+        let allKeys = root.children.keys
+        for childMap in allKeys {
+            let newRoot = root.children[childMap]!
+            let newCurrent = current.appending(childMap)
+            suggestionHelper(newRoot, list: &list, current: newCurrent)
+        }
+    }
+    
+    func suggest(_ prefix: String) -> [String] {
+        var current = ""
+        var list : [String] = []
+        var theRoot = self.root //Assume exists, mandatory init param (start at top here and traverse tree)
+        let prefixArray = strToCharArray(prefix)
+        for i in 0..<prefixArray.count {
+            //Check child map (node children dict of char strings that point to child nodes)
+            let curChar = charToString(prefixArray[i])
+            if theRoot.children[curChar] == nil { //Doesn't exist
+                return [] //char is not in child map
+            }
+            theRoot = theRoot.children[curChar]!
+            current += curChar
+        }
+        suggestionHelper(theRoot, list: &list, current: current)
+        return list
     }
 }
