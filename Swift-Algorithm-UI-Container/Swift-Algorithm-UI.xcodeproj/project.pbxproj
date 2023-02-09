@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		271F81C928500CB900202B16 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271F81C828500CB800202B16 /* TreeNode.swift */; };
+		2729B0322995ABC20051EEB4 /* SceneKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729B0312995ABC20051EEB4 /* SceneKitViewController.swift */; };
 		2733F829293EA5E800D5F30F /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F828293EA5E800D5F30F /* CalculatorView.swift */; };
 		2733F82B293EA5F900D5F30F /* SceneKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F82A293EA5F900D5F30F /* SceneKitView.swift */; };
 		2733F82D293EA8F800D5F30F /* SubChoiceScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F82C293EA8F800D5F30F /* SubChoiceScroll.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		271F81C828500CB800202B16 /* TreeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeNode.swift; sourceTree = "<group>"; };
+		2729B0312995ABC20051EEB4 /* SceneKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitViewController.swift; sourceTree = "<group>"; };
 		2733F828293EA5E800D5F30F /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		2733F82A293EA5F900D5F30F /* SceneKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKitView.swift; sourceTree = "<group>"; };
 		2733F82C293EA8F800D5F30F /* SubChoiceScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubChoiceScroll.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				274332EE259969B60033C59D /* ViewController.swift */,
 				274F8BA525C63C44002198A3 /* AutocompleteViewController.swift */,
+				2729B0312995ABC20051EEB4 /* SceneKitViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				275F378C27D9535E00FE8B82 /* ArrayFunctionsRenderer.swift in Sources */,
 				27AB881027BEC32B00E3B847 /* LogDebugging.swift in Sources */,
 				27C77EDF27C8004F00C74631 /* StringFunctionsRenderer.swift in Sources */,
+				2729B0322995ABC20051EEB4 /* SceneKitViewController.swift in Sources */,
 				27AB5E6A2947CA0A00E06082 /* CalculatorButton.swift in Sources */,
 				27CA6D1C25AFB805006CA383 /* Extensions.swift in Sources */,
 				276117D82977413A005E2F4F /* ComplexityChartRenderer.swift in Sources */,

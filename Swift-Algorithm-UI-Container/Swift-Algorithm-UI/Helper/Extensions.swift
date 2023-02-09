@@ -73,9 +73,22 @@ extension UIView {
         gLayer.colors = [colorOne.cgColor, colorTwo.cgColor] //limit ?
         gLayer.locations = [0.0, 1.0] //vertical
         gLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gLayer.frame = self.bounds
         self.layer.insertSublayer(gLayer, at: 0)
+    }
+    
+    //Get view w/h minus or plus whatever
+    func viewWidth(_ minus: CGFloat, plus: CGFloat, shrink: Bool) -> CGFloat {
+        let minusAdjusted = self.frame.size.width - minus
+        let plusAdjusted = self.frame.size.width + plus
+        return shrink == true ? minusAdjusted : plusAdjusted
+    }
+    
+    func viewHeight(_ minus: CGFloat, plus: CGFloat, shrink: Bool) -> CGFloat {
+        let minusAdjusted = self.frame.size.height - minus
+        let plusAdjusted = self.frame.size.height + plus
+        return shrink == true ? minusAdjusted : plusAdjusted
     }
 }
 

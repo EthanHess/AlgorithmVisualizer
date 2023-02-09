@@ -23,6 +23,7 @@ class AutocompleteViewController: UIViewController {
         return tv
     }()
     
+    //Can also add search results controller but this is more versatile 
     var searchBar : UISearchBar = {
         let sb = UISearchBar()
         return sb
@@ -32,6 +33,18 @@ class AutocompleteViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    //Test
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        guard let navCon = navigationController else {
+            print("No NC")
+            return
+        }
+        let skView = SceneKitViewController()
+        navCon.pushViewController(skView, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,11 +60,50 @@ class AutocompleteViewController: UIViewController {
         let listForCChar = autoCompleteSystem.input(char: "i")
         print("AUTOCOMPLETE \(listForCChar)")
         
-        self.view.gradientWithColors(colorOne: .orange, colorTwo: .white)
+        //For animation it's easier to have function locally instead of extension?
+        //self.view.gradientWithColors(colorOne: .cyan, colorTwo: .white)
+        
+        self.gradientWithColorArray(colors: [.cyan, .white, .blue], theView: self.view)
         
         //Other approach (True or False for now but will add list of possibilities)
         setUpTrie()
     }
+    
+    //Gradient (factor in vertical / multiple colors)
+    func gradientWithColorArray(colors: [UIColor], theView: UIView) {
+        let startPoints : [NSNumber] = [-1.0,-0.5, 0.0]
+        let endPoints : [NSNumber] = [1.0,1.5, 2.0]
+        
+        let gLayer = CAGradientLayer()
+        gLayer.frame = theView.bounds
+        gLayer.colors = colors.map({ color in
+            return color.cgColor
+        })
+        gLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        theView.layer.insertSublayer(gLayer, at: 0)
+        
+        addGradientAnimation(startPoints, endPoints: endPoints, gradientLayer: gLayer)
+    }
+    
+    //Shimmer handler
+    fileprivate func addGradientAnimation(_ startPoints: [NSNumber], endPoints: [NSNumber], gradientLayer: CALayer) {
+        let animation = CABasicAnimation(keyPath: "locations")
+        animation.fromValue = startPoints
+        animation.toValue = endPoints
+        animation.duration = 1.0
+        animation.autoreverses = true
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        gradientLayer.add(animation, forKey: nil)
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.duration = 2.0
+        animationGroup.animations = [animation]
+        animationGroup.repeatCount = .infinity
+        animationGroup.autoreverses = true
+        gradientLayer.add(animationGroup, forKey: nil)
+    }
+    
     
     //Simple autocomplete
     fileprivate func tableSetup() {
@@ -248,6 +300,7 @@ class ACNode {
 
 
 //MARK: Different approach (True or False for now but will add list of possibilities)
+//NOTE: Working perfectly!
 
 extension AutocompleteViewController {
     fileprivate func setUpTrie() {
