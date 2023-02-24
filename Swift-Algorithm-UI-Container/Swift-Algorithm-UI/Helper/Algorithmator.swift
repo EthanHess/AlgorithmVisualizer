@@ -1165,6 +1165,52 @@ class Algorithmator: NSObject {
         
         return result
     }
+    
+    
+    //MARK: number of islands (in matrix) (works!)
+    static func numIslands(_ grid: [[String]]) -> Int {
+        var result = 0
+        var tempGrid = grid //will want to mutate, pass as inout param to helper function
+        
+        //Brute force approach
+        for i in 0..<tempGrid.count { //matrix
+            let subarray = tempGrid[i]
+            for j in 0..<subarray.count { //subarrays, where comparison happens
+                //Check surrounding (if first or top, left and top are water, same w / all tops and corners)
+                if grid[i][j] == "1" {
+                    // print("First \(result)")
+                    if dfsIslands(&tempGrid, i: i, j: j) == true {
+                        result+=1
+                    }
+                    // print("Count \(result)")
+                }
+            }
+        }
+        return result
+    }
+
+    //DFS approach (TODO factor in BFS and whatever other type of solution)
+    @discardableResult static func dfsIslands(_ matrix: inout [[String]], i: Int, j: Int) -> Bool {
+        let outOfBounds = i < 0 || j < 0 || i >= matrix.count || j >= matrix[i].count
+        if outOfBounds == true {
+            return false
+        } else {
+            if matrix[i][j] != "1" {
+                return false
+            }
+        }
+        
+        //print("Hit count")
+        
+        matrix[i][j] = "0" //want to reset at index after checked
+        //checking adjecent indices in matrix recursively
+        dfsIslands(&matrix, i: i + 1, j: j) //Checking adjecent rows (i)
+        dfsIslands(&matrix, i: i - 1, j: j)
+        dfsIslands(&matrix, i: i, j: j + 1) //Checking adjecent colums (j)
+        dfsIslands(&matrix, i: i, j: j - 1)
+        
+        return true
+    }
 }
 
 

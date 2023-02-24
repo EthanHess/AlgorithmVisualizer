@@ -111,6 +111,28 @@ class ViewController: UIViewController, ScrollHandler {
         // subarraysDivisibleByK()
         
         calculatorWrapper()
+        numberOfIslands()
+    }
+    
+    fileprivate func numberOfIslands() {
+        let grid1 = [
+            ["1","1","1","1","0"],
+            ["1","1","0","1","0"],
+            ["1","1","0","0","0"],
+            ["0","0","0","0","0"]
+          ]
+
+        let grid2 = [
+          ["1","1","0","0","0"],
+          ["1","1","0","0","0"],
+          ["0","0","1","0","0"],
+          ["0","0","0","1","1"]
+        ]
+
+        //let r1 = Algorithmator.numIslands(grid1)
+        let r2 = Algorithmator.numIslands(grid2)
+        
+        print("Num Islands \(r2)")
     }
     
     fileprivate func subarraysDivisibleByK() {
