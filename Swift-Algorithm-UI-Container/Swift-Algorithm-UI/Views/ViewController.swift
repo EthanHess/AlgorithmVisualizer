@@ -110,9 +110,19 @@ class ViewController: UIViewController, ScrollHandler {
         
         // subarraysDivisibleByK()
         
-        calculatorWrapper()
-        numberOfIslands()
-        needleInAHaystack()
+//        calculatorWrapper()
+//        numberOfIslands()
+//        needleInAHaystack()
+        
+        extensionsTests()
+    }
+    
+    fileprivate func extensionsTests() {
+        //        Cannot use mutating member on immutable value of type '[Int]'
+                
+        var mutableCopy = [1, 2 ,3 , 4]
+        let arrRemovalExtension: () = mutableCopy.removeElements([3, 4])
+        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension)")
     }
     
     fileprivate func needleInAHaystack() {
@@ -231,11 +241,6 @@ class ViewController: UIViewController, ScrollHandler {
         
         //Add return type
         Algorithmator.rotate(&theMatrix)
-        
-//        Cannot use mutating member on immutable value of type '[Int]'
-        
-//        let arrRemovalExtension = [1, 2, 3, 4].removeElements([3, 4])
-//        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension)")
     }
     
     fileprivate func validParenthesisWrapper() {

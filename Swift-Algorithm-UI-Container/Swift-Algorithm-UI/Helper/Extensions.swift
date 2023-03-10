@@ -114,36 +114,30 @@ typealias ArrayProtocols = Equatable & Hashable
 
 extension Array where Element: ArrayProtocols {
     mutating func removeElements(_ elementsToRemove: [Element]) {
-        //var returnElements : [Element] = []
-        //MARK: Brute force, nested for loop (not ideal Big O)
-        //O(n^2)
-        for element in elementsToRemove {
-            //Under the hood "contains" function will loop through array, which is linear (confirm this)
-            if self.contains(where: { $0 == element }) == true {
-                if let indexOfObj = self.firstIndex(of: element) {
-                    self.remove(at: indexOfObj)
+        
+        //Brute force, not BigO ideal yet but will get the job done
+        
+        //MARK: Grab indices to remove
+        var indicesToRemove : [Int] = []
+        for i in 0..<self.count {
+            let element = self[i]
+            for theElement in elementsToRemove {
+                if theElement == element {
+                    indicesToRemove.append(i)
                 }
             }
         }
+
+        //Tediously mutate self without crashing due to out of bounds as elements shift
+        let indicesSorted = indicesToRemove.sorted() //sorted() O(n log n)
         
-        //MARK: More efficient, store a hashmap of current array and only iterate once
-        
-        var hashMap : [Element : Bool] = [:]
-        
-        //O(n)
-        for theElement in elementsToRemove {
-            hashMap[theElement] = true
-        }
-        
-        //O(n) (or O(n^2) if using "firstIndex")
-        for theElementSelf in self {
-            if hashMap[theElementSelf] == true {
-                //MARK: "firstIndex" is O(n) so this needs to be more efficient
-                if let indexOfObj = self.firstIndex(of: theElementSelf) {
-                    self.remove(at: indexOfObj)
-                }
+        for i in (0..<self.count).reversed() { //reversed() is //O(1)
+            if indicesSorted.contains(i) { //contains() is O(n)
+                self.remove(at: i) //remove() is O(n)
             }
         }
+        
+        print("ARR after removal \(self)")
     }
 }
 
