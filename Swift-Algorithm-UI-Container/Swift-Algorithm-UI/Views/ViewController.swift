@@ -112,6 +112,14 @@ class ViewController: UIViewController, ScrollHandler {
         
         calculatorWrapper()
         numberOfIslands()
+        needleInAHaystack()
+    }
+    
+    fileprivate func needleInAHaystack() {
+//        let r1 = Algorithmator.strStr("sadbutsad", "sad")
+//        let r2 = Algorithmator.strStr("leetcode", "leeto")
+        let r3 = Algorithmator.strStr("mississippi", "sipp")
+        print("NH \(r3)")
     }
     
     fileprivate func numberOfIslands() {

@@ -1211,6 +1211,44 @@ class Algorithmator: NSObject {
         
         return true
     }
+    
+    //MARK: Needle in a haystack
+    static func strStr(_ haystack: String, _ needle: String) -> Int {
+        let haystackArray = Array(haystack)
+        let needleArray = Array(needle)
+        
+        if haystack == needle { //strings are the same
+            return 0
+        }
+        
+        for i in 0..<haystackArray.count {
+            let charAtIndexHaystack = String(haystackArray[i])
+            let found = recurSubString(charAtIndexHaystack, needleArray: needleArray, haystackArray: haystackArray, i: i)
+            if found == true {
+                return i
+            }
+        }
+
+        return -1
+    }
+
+    static func recurSubString(_ curHaystackChar: String, needleArray: Array<String.Element>, haystackArray: Array<String.Element>, i: Int) -> Bool {
+        for j in 0..<needleArray.count {
+            let charAtIndexNeedle = String(needleArray[j])
+            let inBounds = (j + i) < haystackArray.count
+            if inBounds == true {
+                let compareHaystack = String(haystackArray[i+j])
+                if charAtIndexNeedle == compareHaystack {
+                    if j == needleArray.count-1 {
+                        return true
+                    }
+                } else {
+                    return false
+                }
+            }
+        }
+        return false
+    }
 }
 
 
