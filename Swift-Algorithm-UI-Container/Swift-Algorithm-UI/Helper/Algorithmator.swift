@@ -1249,6 +1249,50 @@ class Algorithmator: NSObject {
         }
         return false
     }
+    
+    //Passes most leetcode tests but not all, needs to be tweaked for [3,5,1] for example
+    static func search(_ nums: [Int], _ target: Int) -> Int {
+        let result = -1
+        if nums.count == 1 {
+            if nums[0] == target {
+                return 0
+            } else {
+                return result
+            }
+        }
+        if nums.count == 0 || target < 0 {
+            return result
+        }
+
+        var leftPointer = 0
+        var rightPointer = nums.count-1
+        
+        while leftPointer <= rightPointer { //Split array and when equal, stop
+            let midPoint = (leftPointer + rightPointer) / 2
+            
+            if nums[midPoint] == target {
+                return midPoint
+            }
+            
+            if nums[midPoint] <= nums[rightPointer] {
+                let targetInRangeRight = target > nums[midPoint] && target <= nums[rightPointer]
+                if targetInRangeRight { //if between, want to go right
+                    leftPointer+=1
+                } else {
+                    rightPointer-=1
+                }
+            } else { //same logic but reverse
+                let targetInRangeLeft = target >= nums[leftPointer] && target < nums[rightPointer]
+                if targetInRangeLeft {
+                    rightPointer-=1
+                } else {
+                    leftPointer+=1
+                }
+            }
+        }
+        
+        return result
+    }
 }
 
 

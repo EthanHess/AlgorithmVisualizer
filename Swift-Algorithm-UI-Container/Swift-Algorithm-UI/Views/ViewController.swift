@@ -120,9 +120,12 @@ class ViewController: UIViewController, ScrollHandler {
     fileprivate func extensionsTests() {
         //        Cannot use mutating member on immutable value of type '[Int]'
                 
-        var mutableCopy = [1, 2 ,3 , 4]
+        var mutableCopy = [1,2,3,4]
         let arrRemovalExtension: () = mutableCopy.removeElements([3, 4])
-        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension)")
+        //Already removed 3, 4 here
+        let arrRemovalFront: () = mutableCopy.removeElements([1, 2])
+        let arrRemovalNone: () = mutableCopy.removeElements([0, 8])
+        print("ARR REMOVAL EXTENSION RESULT \(arrRemovalExtension) \(arrRemovalFront) \(arrRemovalNone)")
     }
     
     fileprivate func needleInAHaystack() {
