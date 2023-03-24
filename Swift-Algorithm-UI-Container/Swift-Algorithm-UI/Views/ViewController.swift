@@ -115,6 +115,13 @@ class ViewController: UIViewController, ScrollHandler {
 //        needleInAHaystack()
         
         extensionsTests()
+        nthNodeLLTest()
+    }
+    
+    fileprivate func nthNodeLLTest() {
+        let listNode = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5, nil)))))
+        let returnNode = Algorithmator.removeNthFromEnd(listNode, 2)
+        print("Return node \(returnNode)")
     }
     
     fileprivate func extensionsTests() {

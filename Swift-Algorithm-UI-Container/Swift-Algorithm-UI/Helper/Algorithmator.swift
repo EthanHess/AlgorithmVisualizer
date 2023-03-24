@@ -1293,6 +1293,34 @@ class Algorithmator: NSObject {
         
         return result
     }
+    
+    
+    //MARK: Remove nth node from end of linked list
+    static func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+        if head == nil { return nil }
+        var listLength = 1
+        fetchTotalCountOfList(head!, count: &listLength)
+        print("List length \(listLength)")
+        
+        //TODO *Finish* At index, nullify node to get rid of but store the next node, these two will now be neighbors
+
+        return nil
+    }
+
+    static func fetchTotalCountOfList(_ head: ListNode, count: inout Int)  {
+        if head.next != nil {
+            count += 1
+            fetchTotalCountOfList(head.next!, count: &count)
+        }
+    }
+}
+
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init() { self.val = 0; self.next = nil; }
+    public init(_ val: Int) { self.val = val; self.next = nil; }
+    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
 }
 
 

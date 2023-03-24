@@ -323,6 +323,7 @@ extension AutocompleteViewController {
             autocompleteTrie.insert(word: word)
         }
         print("RESULT TEST \(autocompleteTrie.suggest("hel"))")
+        print("CHILDREN \(autocompleteTrie.root.children)")
     }
 }
 
@@ -351,6 +352,7 @@ class AutocompleteTrie {
             let charString = charToString(char)
             if (current.children[charString] == nil) {
                 current.children[charString] = AutocompleteNode(value: charString)
+                print("CUR CHILDREN \(current.children)")
             }
             current = current.children[charString]!
         }
