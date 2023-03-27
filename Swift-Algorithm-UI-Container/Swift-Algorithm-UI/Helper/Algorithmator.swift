@@ -1295,14 +1295,35 @@ class Algorithmator: NSObject {
     }
     
     
-    //MARK: Remove nth node from end of linked list
+    //MARK: Remove nth node from end of linked list (passes most tests but not all so fix)
     static func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
         if head == nil { return nil }
+        if head!.next == nil && n == 1 { return nil }
+        
         var listLength = 1
         fetchTotalCountOfList(head!, count: &listLength)
         print("List length \(listLength)")
         
         //TODO *Finish* At index, nullify node to get rid of but store the next node, these two will now be neighbors
+        
+        var curNode = head
+        let indexToRemove = listLength == 2 ? (listLength - n) : (listLength - n) + 1
+        var curIndex = 1 //starting at 1, not 0 in this special case, maybe not call "index"?
+        var lastNode : ListNode? = nil //assign next node to last node and forget about the one we want to remove
+        
+        while curNode!.next != nil {
+            if curIndex == indexToRemove {
+                if indexToRemove == 1 {
+                    curNode?.next = nil
+                    return curNode!//no need to factor in previous
+                }
+                lastNode!.next = curNode!.next //omit nth
+                return head
+            }
+            lastNode = curNode
+            curNode = curNode!.next
+            curIndex += 1
+        }
 
         return nil
     }

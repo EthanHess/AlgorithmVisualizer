@@ -44,6 +44,9 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
         scrollView.contentSize = CGSize(width: Int(self.bounds.size.width) * algorithmArray().count, height: 0)
         scrollView.isPagingEnabled = true
         
+        //Note: Fixes negative offset but still want to see why that was happening in the first place
+        scrollView.contentInsetAdjustmentBehavior = .never
+
         //TODO page control?
         
         //content
@@ -55,15 +58,16 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
         
         for i in 0..<algorithmArray().count {
             
-            let height = CGFloat(self.frame.size.height - 20)
-            let width = CGFloat(self.frame.size.width - 20)
-            let frameForView = CGRect(x: x, y: CGFloat(10), width: width, height: height)
+            let height = CGFloat(self.frame.size.height)
+            let width = CGFloat(self.frame.size.width)
+            let frameForView = CGRect(x: x, y: 0, width: width, height: height)
             let theLabel = UILabel(frame: frameForView)
             
             theLabel.layer.cornerRadius = 35
             theLabel.tag = i
             theLabel.isUserInteractionEnabled = true
             theLabel.textAlignment = .center
+            theLabel.backgroundColor = .darkText
             
             theLabel.text = algorithmArray()[i][titleKey] as? String
             theLabel.textColor = (algorithmArray()[i][colorKey] as! UIColor)
@@ -72,6 +76,7 @@ class AlgorithmChoiceScroll: UIView, UIScrollViewDelegate {
             theLabel.addGestureRecognizer(tap)
             
             scrollView.addSubview(theLabel)
+            viewArray.append(theLabel)
             
             x = x + width
         }
