@@ -1334,6 +1334,37 @@ class Algorithmator: NSObject {
             fetchTotalCountOfList(head.next!, count: &count)
         }
     }
+    
+    
+    //MARK: Array -> BST (works :))
+    
+    //NOTE: Brute force, this can be shortened / optimized a lot, but just wanted to get something down
+    static func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        //Midpoint will be root, others will go on either side
+        //Height balanced = height difference on either side is not more than 1
+        if nums.count == 1 { return TreeNode(nums[0], nil, nil) }
+        if nums.count == 0 { return nil }
+        
+        //Other attemp
+        
+        let root = tree(nums, start: 0, end: nums.count-1)
+        
+        return root
+    }
+    
+    static func tree(_ nums: [Int], start: Int, end: Int) -> TreeNode? {
+        let done = (end + 1 - start) < 1
+        if done == true { return nil }
+        
+        let midpoint = (start + end) / 2
+        let root = TreeNode(nums[midpoint], nil, nil)
+        
+        //recur
+        root.left = tree(nums, start: start, end: midpoint - 1)
+        root.right = tree(nums, start: midpoint + 1, end: end)
+        
+        return root
+    }
 }
 
 public class ListNode {

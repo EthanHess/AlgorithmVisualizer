@@ -114,8 +114,15 @@ class ViewController: UIViewController, ScrollHandler {
 //        numberOfIslands()
 //        needleInAHaystack()
         
-        extensionsTests()
-        nthNodeLLTest()
+        //extensionsTests()
+        //nthNodeLLTest()
+        
+        arrToBSTTest()
+    }
+    
+    fileprivate func arrToBSTTest() {
+        let returnNode = Algorithmator.sortedArrayToBST([-10,-3,0,5,9])
+        print("Return node BST \(returnNode)")
     }
     
     fileprivate func nthNodeLLTest() {
