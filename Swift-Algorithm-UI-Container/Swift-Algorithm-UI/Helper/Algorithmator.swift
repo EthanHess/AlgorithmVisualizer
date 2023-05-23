@@ -1365,6 +1365,48 @@ class Algorithmator: NSObject {
         
         return root
     }
+    
+    
+    //MARK: Rotate imate (Second approach)
+    static func rotateMatrix(_ matrix: inout [[Int]]) {
+        if matrix.count == 0 { return }
+
+        let row = matrix.count
+        let column = matrix[0].count //Really the same but may be less confusing to have two variables
+
+        for i in 0..<row {
+            for j in 0..<i {
+                swap(&matrix, i: i, j: j)
+            }
+        }
+
+        for i in 0..<matrix.count {
+            var curSubarray = matrix[i]
+            var iMutable = 0
+            var jMutable = column - 1
+            reverse(&curSubarray, i: &iMutable, j: &jMutable)
+            matrix[i] = curSubarray
+        }
+        
+        print("matrix mutated \(matrix)")
+    }
+
+    static func swap(_ matrix: inout [[Int]], i: Int, j: Int) {
+        let temp = matrix[i][j]
+        matrix[i][j] = matrix[j][i]
+        matrix[j][i] = temp
+    }
+
+    static func reverse(_ subarray: inout [Int], i: inout Int, j: inout Int) {
+        while i < j {
+            let temp = subarray[i]
+            subarray[i] = subarray[j]
+            subarray[j] = temp
+            i+=1
+            j-=1
+            print("subarray reversed \(subarray)")
+        }
+    }
 }
 
 public class ListNode {
