@@ -40,7 +40,7 @@ class SceneKitView: UIView {
         scene.rootNode.addChildNode(cameraNode)
                
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 50)
         
         // create and add a light to the scene
         let lightNode = SCNNode()
@@ -73,8 +73,10 @@ class SceneKitView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //Pre sort, see the mess, then we clean it up :)
     fileprivate func addInitialBoxesToScene(_ dimensionArray: [[Int]]) {
         //Start at bottom, build tower
+        var totalHeight : CGFloat = 0 //keep track of total height for box's y coord
         for dimensions in dimensionArray {
             //Assume exists (in this problem)
             let length = CGFloat(dimensions[0])
@@ -83,7 +85,9 @@ class SceneKitView: UIView {
             
             let boxGeo = SCNBox(width: width, height: height, length: length, chamferRadius: 0)
             let boxNode = SCNNode(geometry: boxGeo)
-            boxGeo.firstMaterial?.diffuse.contents = UIColor.cyan
+            boxNode.position.y -= Float(totalHeight)
+            totalHeight += height
+            boxGeo.firstMaterial?.diffuse.contents = UIColor.random
             
             scene.rootNode.addChildNode(boxNode)
         }
@@ -130,5 +134,45 @@ class SceneKitView: UIView {
         }
         
         return maxDepth
+    }
+    
+    //MARK: Chat GPT solution (AI solved this and I'm very impressed)
+    func cuboidsAIVersion(_ cuboids: [[Int]]) -> Int {
+        var cuboids = cuboids
+        addInitialBoxesToScene(cuboids) //render, then sort
+        for i in 0..<cuboids.count {
+            cuboids[i].sort()
+        }
+        cuboids.sort { a, b in
+            if a[0] != b[0] {
+                return a[0] < b[0]
+            } else if a[1] != b[1] {
+                return a[1] < b[1]
+            } else {
+                return a[2] < b[2]
+            }
+        }
+
+        var dp = [Int](repeating: 0, count: cuboids.count)
+        var maxHeight = 0
+
+        for i in 0..<cuboids.count {
+            dp[i] = cuboids[i][2]
+            for j in 0..<i {
+                if cuboids[i][0] >= cuboids[j][0] && cuboids[i][1] >= cuboids[j][1] && cuboids[i][2] >= cuboids[j][2] {
+                    dp[i] = max(dp[i], dp[j] + cuboids[i][2])
+                }
+            }
+            maxHeight = max(maxHeight, dp[i])
+        }
+
+        return maxHeight
+    }
+}
+
+//Random color for box
+extension UIColor {
+    static var random: UIColor {
+        return .init(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1)
     }
 }

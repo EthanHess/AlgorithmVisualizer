@@ -32,7 +32,8 @@ class SceneKitViewController: UIViewController {
         
         let cuboids = [[7,11,17],[7,17,11],[11,7,17],[11,17,7],[17,7,11],[17,11,7]] //102
         let maxStackedHeight = skContainer.maxHeight(cuboids)
-        print("MSH SK \(maxStackedHeight)")
+        let maxStackedHeightAI = skContainer.cuboidsAIVersion(cuboids)
+        print("MSH SK \(maxStackedHeight) AI Version \(maxStackedHeightAI)")
     }
 
     /*
