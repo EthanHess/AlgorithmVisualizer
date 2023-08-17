@@ -1407,6 +1407,36 @@ class Algorithmator: NSObject {
             print("subarray reversed \(subarray)")
         }
     }
+    
+    
+    //MARK: Balance binary tree
+    static func balanceBST(_ root: TreeNode?) -> TreeNode? {
+        //What to return if node is nil?
+        var nums : [Int] = []
+        inorderTraversal(root!, nums: &nums)
+        //build a tree from beginninng of nums array (node vals) to end
+        let balancedTree = buildTree(nums, left: 0, right: nums.count - 1)
+        return balancedTree
+    }
+    
+    static func inorderTraversal(_ node: TreeNode?, nums: inout [Int]) {
+        if (node == nil) { return }
+        inorderTraversal(node!.left, nums: &nums)
+        nums.append(node!.val)
+        inorderTraversal(node!.right, nums: &nums)
+    }
+    
+    //build tree of type TreeNode from nums array
+    static func buildTree(_ nums: [Int], left: Int, right: Int) -> TreeNode? {
+        if left > right { return nil }
+        let midpoint = (left + right) / 2
+        //For new node, cur val + new left and right nodes
+        let newVal = nums[midpoint]
+        let newLeft = buildTree(nums, left: left, right: midpoint - 1)
+        let newRight = buildTree(nums, left: midpoint + 1, right: right)
+        let newNode = TreeNode(newVal, newLeft, newRight)
+        return newNode
+    }
 }
 
 public class ListNode {
