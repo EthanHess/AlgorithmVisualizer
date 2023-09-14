@@ -28,6 +28,8 @@ class RainwaterContainer: UIView {
     let defaultTidalHeight: CGFloat = 0.50
     let saveSpeedFactor = CGFloat.random(in: 4 ... 8)
     
+    //var hasAddedGradient = false
+    
     lazy var background: UIView = {
         let background = UIView()
         background.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +41,8 @@ class RainwaterContainer: UIView {
     let shapeLayer: CAShapeLayer = {
         let shapeLayer = CAShapeLayer()
         shapeLayer.strokeColor = UIColor.random.cgColor //water top
-        shapeLayer.fillColor = UIColor.random.cgColor //water fill
+        shapeLayer.fillColor = UIColor.random.withAlphaComponent(0.6).cgColor //water fill
+        //shapeLayer.gradientWithColors(colorOne: .random, colorTwo: .white)
         return shapeLayer
     }()
     
@@ -54,7 +57,7 @@ class RainwaterContainer: UIView {
             //configureGradient([])
         } else { //transparent background,
             //backgroundColor = .clear.withAlphaComponent(0)
-            gradientWithColors(colorOne: .random, colorTwo: .random)
+            
             configureBezier()
         }
     }
@@ -62,6 +65,9 @@ class RainwaterContainer: UIView {
     func editShapelayerColors(_ fill: CGColor, stroke: CGColor) {
         shapeLayer.fillColor = fill
         shapeLayer.strokeColor = stroke
+        
+        //shapeLayer.gradientWithColors(colorOne: UIColor(cgColor: fill), colorTwo: .white)
+        gradientWithColors(colorOne: UIColor(cgColor: fill).withAlphaComponent(0.6), colorTwo: .white)
     }
     
     fileprivate func configureBezier() {
@@ -86,6 +92,18 @@ class RainwaterContainer: UIView {
         }
     }
     
+    //TODO call this
+    func parentDidDisappear() {
+        //TODO destroy, make sure nothing leaks / is clear for rerender
+        stopDisplayLink()
+        for theView in subviews {
+            theView.removeFromSuperview()
+        }
+    }
+    
+    deinit {
+        //parentDidDissapear()
+    }
     
     //MARK: Half alpha / half image combination, does it look cool?
     

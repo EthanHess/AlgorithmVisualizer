@@ -92,6 +92,21 @@ extension UIView {
     }
 }
 
+//Like for UIView but seeing how this works on shape layers
+extension CAShapeLayer {
+    //Gradient (factor in vertical / multiple colors)
+    func gradientWithColors(colorOne: UIColor, colorTwo: UIColor) {
+        let gLayer = CAGradientLayer()
+        gLayer.colors = [colorOne.cgColor, colorTwo.cgColor] //limit ?
+        gLayer.locations = [0.0, 1.0] //vertical
+        gLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gLayer.frame = self.bounds
+        //self.insertSublayer(gLayer, at: 0)
+        self.addSublayer(gLayer)
+        //self.insertSublayer(gLayer, above: self)
+    }
+}
+
 
 extension Character {
     func isPlusOrMinus() -> Bool {
