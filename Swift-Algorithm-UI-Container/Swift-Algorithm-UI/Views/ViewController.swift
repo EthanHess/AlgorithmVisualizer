@@ -110,7 +110,7 @@ class ViewController: UIViewController, ScrollHandler {
         
         // subarraysDivisibleByK()
         
-//        calculatorWrapper()
+        calculatorWrapper()
 //        numberOfIslands()
 //        needleInAHaystack()
         
@@ -121,6 +121,13 @@ class ViewController: UIViewController, ScrollHandler {
         
         var matrix = [[1,2,3],[4,5,6],[7,8,9]]
         Algorithmator.rotateMatrix(&matrix)
+        
+        //MARK: This crashes, fix
+        //let spiralMX = Algorithmator.generateMatrix(3)
+        
+        let canJump = Algorithmator.canJump([2,3,1,1,4])
+        let canJumpTwo = Algorithmator.canJump([3,2,1,0,4])
+        
     }
     
     fileprivate func arrToBSTTest() {

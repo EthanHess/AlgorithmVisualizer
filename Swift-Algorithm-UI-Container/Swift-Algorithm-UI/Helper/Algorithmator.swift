@@ -826,10 +826,13 @@ class Algorithmator: NSObject {
             let charNumVal = charIsSymbol == false ? Int(String(charString)) : 0
 
             if !charIsSymbol {
+                //NOTE: This is optional
                 let compare = Int(String(charString))
-                if compare! >= 0 && compare! <= 9 {
-                    operand = operand * 10 + charNumVal!
-                    print("-- CALCULATOR OPERAND SET \(operand)")
+                if (compare != nil) {
+                    if compare! >= 0 && compare! <= 9 {
+                        operand = operand * 10 + charNumVal!
+                        print("-- CALCULATOR OPERAND SET \(operand)")
+                    }
                 }
             }
             
@@ -1437,6 +1440,50 @@ class Algorithmator: NSObject {
         let newNode = TreeNode(newVal, newLeft, newRight)
         return newNode
     }
+    
+    //MARK: Spiral matrix
+    static func generateMatrix(_ n: Int) -> [[Int]] {
+            var result : [[Int]] = [[]]
+//            let totalNumSet = n*n
+            let midpoint = n / 2
+            var counter = 1
+        
+            for i in 0..<midpoint {
+                let lastItem = n-i-1 // (-1 to set back to 0, i.e. 3-2-1)
+                for k in i..<lastItem {
+                    counter+=1
+                    result[i][k] = counter
+                }
+                for k in i..<lastItem {
+                    counter+=1
+                    result[k][lastItem] = counter
+                }
+                for j in (i..<lastItem).reversed() {
+                    counter+=1
+                    result[lastItem][j] = counter
+                }
+                for j in (i..<lastItem).reversed() {
+                    counter+=1
+                    result[j][i] = counter
+                }
+            }
+
+            //Center item
+            if n%2 == 1 { result[midpoint][midpoint] = counter }
+            return result
+        }
+    
+    
+    //MARK: Jump Game
+    static func canJump(_ nums: [Int]) -> Bool {
+        var maxVal = 0
+        for i in 0..<nums.count {
+            if i > maxVal { return false }
+            maxVal = max(maxVal, i + nums[i])
+        }
+        return true
+    }
+    
 }
 
 public class ListNode {
