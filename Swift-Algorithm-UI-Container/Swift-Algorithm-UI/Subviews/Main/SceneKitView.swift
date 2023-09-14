@@ -169,10 +169,3 @@ class SceneKitView: UIView {
         return maxHeight
     }
 }
-
-//Random color for box
-extension UIColor {
-    static var random: UIColor {
-        return .init(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1)
-    }
-}

@@ -148,13 +148,13 @@ class ArrayFunctionsRenderer: UIView {
         let rcTwo = RainwaterContainer()
         rcTwo.frame = self.bounds
         rcTwo.configureWithMode(false)
-        rcTwo.editShapelayerColors(UIColor.blue.cgColor, stroke: UIColor.white.cgColor)
+        rcTwo.editShapelayerColors(UIColor.random.cgColor, stroke: UIColor.random.cgColor)
         addSubview(rcTwo)
         
         let rcThree = RainwaterContainer()
         rcThree.frame = self.bounds
         rcThree.configureWithMode(false)
-        rcThree.editShapelayerColors(UIColor.black.cgColor, stroke: UIColor.lightGray.cgColor)
+        rcThree.editShapelayerColors(UIColor.random.cgColor, stroke: UIColor.random.cgColor)
         addSubview(rcThree)
         
         //Looks good this size for when we vizualize rainwater problem

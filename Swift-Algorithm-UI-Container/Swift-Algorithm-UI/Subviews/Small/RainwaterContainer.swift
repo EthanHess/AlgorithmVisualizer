@@ -38,14 +38,14 @@ class RainwaterContainer: UIView {
     //TODO add whitecaps ;) (black diamond challenge)
     let shapeLayer: CAShapeLayer = {
         let shapeLayer = CAShapeLayer()
-        shapeLayer.strokeColor = UIColor.blue.cgColor //water top
-        shapeLayer.fillColor = UIColor.cyan.cgColor //water fill
+        shapeLayer.strokeColor = UIColor.random.cgColor //water top
+        shapeLayer.fillColor = UIColor.random.cgColor //water fill
         return shapeLayer
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
     }
     
     func configureWithMode(_ gradient: Bool) {
@@ -53,7 +53,8 @@ class RainwaterContainer: UIView {
             backgroundColor = .black
             //configureGradient([])
         } else { //transparent background,
-            backgroundColor = .clear.withAlphaComponent(0)
+            //backgroundColor = .clear.withAlphaComponent(0)
+            gradientWithColors(colorOne: .random, colorTwo: .random)
             configureBezier()
         }
     }
