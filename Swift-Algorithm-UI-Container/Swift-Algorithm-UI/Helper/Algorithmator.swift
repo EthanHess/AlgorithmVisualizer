@@ -796,91 +796,69 @@ class Algorithmator: NSObject {
     //String math problem to Int solution, TODO: Render in StringFunctions
     
     
-    //MARK: This doesn't return the correct answer yet for all inputs, only some, fix this
+    //MARK: LeetCode accepted!
     
     static func calculate(_ s: String) -> Int {
-        
         var result = 0
-        var operand = 0
-        var symbol = "+"
-        
-        //Get rid of spaces (discard as seems to not remove double)
-        //let newString = s.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        var storageStack : [Int] = []
-        
-        let strArr = Array(s)
-        
-        for i in 0...strArr.count - 1 {
-            
-            let charString = strArr[i]
-            if charString != " " {
-                
-            postNotifcationWithVal(val: [charString: i], name: kNotificationNameCalculatorAlgorithmUpdated)
-            
-            //Should be extension to be neater
-            let charIsSymbol = charString == "+" || charString == "-" || charString == "*" || charString == "/"
-            
-            let last = i == strArr.count - 1
+        var curNum = 0
+        var symbol = 1 //controls whether addition or subtraction
+        var storage : [Int] = []
+        storage.append(symbol)
 
-            let charNumVal = charIsSymbol == false ? Int(String(charString)) : 0
-
-            if !charIsSymbol {
-                //NOTE: This is optional
-                let compare = Int(String(charString))
-                if (compare != nil) {
-                    if compare! >= 0 && compare! <= 9 {
-                        operand = operand * 10 + charNumVal!
-                        print("-- CALCULATOR OPERAND SET \(operand)")
-                    }
+        let strArray = Array(s)
+        for i in 0...strArray.count - 1 {
+            let curChar = String(strArray[i])
+            //0 - 9, only one digit at a time
+            if isNumber(curChar) == true {
+                if let unwrappedInt = Int(String(curChar)) {
+                    curNum = curNum * 10 + unwrappedInt
                 }
-            }
-            
-            if charIsSymbol || last {
-                if symbol == "+" {
-                    print("--- CALC PLUS \(operand)")
-                    storageStack.append(operand)
-                } else if symbol == "-" {
-                    print("--- CALC MINUS \(operand)")
-                    storageStack.append(-operand) //Should be -1 * ?
-                } else if symbol == "*" { //* or /
-                    // popLast() in Swift removes element which we don't want
-                    let top = storageStack.popLast() ?? 0
-                    let topTimesCur = top * operand
-                    print("CALC MULT \(operand) \(top)")
-                    storageStack.append(topTimesCur)
-                } else if symbol == "/" { // "/"
-                    let top = storageStack.popLast() ?? 0
-                    let  topDivCur = top / operand
-                    print("CALC SUB \(operand) \(top)")
-                    storageStack.append(topDivCur)
+            } else if isParenthesis(curChar) {
+                if curChar == "(" {
+                     storage.append(symbol)
                 } else {
-                    //
+                    storage.popLast()
                 }
-                if charIsSymbol {
-                    print("SYMBOL SET \(charString)")
-                    symbol = String(charString)
+            } else if isSymbol(curChar) {
+                if curChar == "+" || curChar == "-" {
+                    result += symbol * curNum
+                    let leftOperand = curChar == "+" ? 1 : -1
+                    if let lastObj = storage.last {
+                        symbol = leftOperand * lastObj
+                    }
+                    curNum = 0
                 }
-                operand = 0
-            }
+            } else if isSpace(curChar) {
+                // ?
+            } else {
+                // ?
             }
         }
-        
-        print("-- CALC STACK \(storageStack)")
-        
-        while !storageStack.isEmpty {
-            result += storageStack.popLast() ?? 0
-        }
-        
-        //Add to key file to prevent abundance of hardcoded strings
-        postNotifcationWithVal(val: ["CalculatorResult": result], name: kNotificationNameCalculatorAlgorithmUpdated)
-        return result
-        
-//        return storageStack.reduce(0, { accumulator, current in
-//            //print("--- CALCULATOR A + C \(accumulator) -- \(current)")
-//            accumulator + current
-//        })
+
+        return result + symbol * curNum
     }
+
+    //MARK: Helper
+
+    //Can also just do in else clause if not parenthesis, space or symbol since there are no other options (process of elimination) but at least this is explicative
+
+    static func isNumber(_ strChar: String) -> Bool {
+        return strChar == "0" || strChar == "1" || strChar == "2" || strChar == "3" || strChar == "4" || strChar == "5" || strChar == "6" || strChar == "7" || strChar == "8" || strChar == "9"
+    }
+
+    static func isParenthesis(_ strChar: String) -> Bool {
+        return strChar == "(" || strChar == ")"
+    }
+
+    static func isSpace(_ strChar: String) -> Bool {
+        return strChar == " "
+    }
+
+    static func isSymbol(_ strChar: String) -> Bool {
+        return strChar == "+" || strChar == "-" || strChar == "/" || strChar == "*"
+    }
+    
+    //MARK: End Helper
     
     
     //MARK: Longest common prefix (LeetCode accepted but should make more efficient)
