@@ -110,7 +110,7 @@ class ViewController: UIViewController, ScrollHandler {
         
         // subarraysDivisibleByK()
         
-        calculatorWrapper()
+//        calculatorWrapper()
 //        numberOfIslands()
 //        needleInAHaystack()
         
@@ -128,6 +128,9 @@ class ViewController: UIViewController, ScrollHandler {
         let canJump = Algorithmator.canJump([2,3,1,1,4])
         let canJumpTwo = Algorithmator.canJump([3,2,1,0,4])
         
+        
+        let reversedInt = Algorithmator.reverse(123)
+        let reversedIntNeg = Algorithmator.reverse(-123)
     }
     
     fileprivate func arrToBSTTest() {

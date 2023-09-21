@@ -1462,6 +1462,22 @@ class Algorithmator: NSObject {
         return true
     }
     
+    
+    //MARK: Int reverser (passes 99+ % of tests but fix the rest)
+    static func reverse(_ x: Int) -> Int {
+        let intStr = String(x)
+        let arr = Array(intStr)
+        var mutableBuffer = "" //Can maybe just original for better space complexity?
+        for i in stride(from: arr.count-1, through: 0, by: -1) {
+            let charToAppend = arr[i]
+            if charToAppend != "-" {
+                mutableBuffer.append(charToAppend)
+            }
+        }
+        var result = Int(mutableBuffer) ?? 0
+        if x < 0 { result = -result } //make negative if so
+        return result
+    }
 }
 
 public class ListNode {
